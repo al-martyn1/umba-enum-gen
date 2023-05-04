@@ -1,0 +1,60 @@
+FileProlog                              = #pragma once\n
+FileEpilog                              = \n
+
+NamespaceBegin                          = namespace $(NS){\n
+NamespaceEnd                            = } // $(NS)\n
+
+EnumDeclarationBegin                    = enum $(CLASS)\
+ $(ENAMNAME)
+EnumDeclarationWithUnderlyingTypeBegin  = " enum $(CLASS) $(ENAMNAME) :\
+ $(UNDERLYING)"
+EnumDeclarationClassKeyword             = class
+
+TypeCast                                = ($(UNDERLYING))($(ITEMVAL))
+
+EnumScopeBegin                          = \n$(INDENT){
+EnumScopeEnd                            = \n\n$(INDENT)}; // $(DECLBEGIN)\n
+
+EnumItemDeclarationSeparatorBeforeFirst = \n
+EnumItemDeclarationSeparatorBefore      = ,\n
+EnumItemDeclarationSeparatorAfter       = ""
+
+EnumItemDeclaration                     = " $(ITEMNAME) = $(ITEMVAL)$(ITEMCOMMENT)"
+EnumItemComment                         = " /* $(ITEMCOMMENTTEXT) */"
+EnumFlagsDeclaration                    = MARTY_CPP_MAKE_ENUM_FLAGS($(ENAMNAME))\n
+
+EnumSerializationBegin                  = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_BEGIN( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
+EnumSerializationEnd                    = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_END( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
+EnumSerializationItem                   = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_ITEM( $(ITEMNAME), $(ITEMVAL) )"
+
+EnumDeserializationBegin                = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_BEGIN( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
+EnumDeserializationEnd                  = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_END( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
+EnumDeserializationItem                 = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_ITEM( $(ITEMNAME), $(ITEMVAL) )"
+
+EnumItemSerializeBeforeFirst            = ""
+EnumItemSerializeBefore                 = ""
+EnumItemSerializeAfter                  = ";\n"
+
+EnumSerializeSet                        = "MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_SET($(ENAMNAME), $(SETTYPE))\n"
+EnumDeserializeSet                      = "MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_SET($(ENAMNAME), $(SETTYPE))\n"
+EnumSerializeSetType                    = "std::set"
+
+EnumUserIncludeFormat                   = #include \"$(FILENAME)\"
+EnumSystemIncludeFormat                 = #include <$(FILENAME)>
+
+EnumIncludesBefore                      = \n
+EnumIncludesAfter                       = \n
+EnumIncludesEntrySeparator              = \n
+EnumIncludesGroupSeparator              = \n
+EnumIncludesBlockSeparator              = \n
+
+EnumDeclarationIncludes                 = 
+#marty_cpp/marty_ns.h
+EnumFlagDeclarationIncludes             = marty_cpp/marty_flag_ops.h
+EnumSerializationIncludes               = <unordered_map>, <map>, <string>, <exception>, <stdexcept>, marty_cpp/marty_enum.h
+EnumDeserializationIncludes             = <unordered_map>, <map>, <string>, <exception>, <stdexcept>, marty_cpp/marty_enum.h
+EnumFlagIncludes                        = marty_cpp/marty_flags.h
+EnumSetIncludes                         = <unordered_set>, <set>
+
+
+

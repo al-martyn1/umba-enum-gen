@@ -1,0 +1,19 @@
+--unsigned-type=unsigned
+--unsigned-type=unsigned char
+--unsigned-type=unsigned short
+--unsigned-type=unsigned int
+--unsigned-type=unsigned long
+--unsigned-type=unsigned long long
+--unsigned-type=std::uint8_t
+--unsigned-type=std::uint16_t
+--unsigned-type=std::uint32_t
+--unsigned-type=std::uint64_t
+--unsigned-type=uint8_t
+--unsigned-type=uint16_t
+--unsigned-type=uint32_t
+--unsigned-type=uint64_t
+
+--target-language=cpp
+
+--linefeed=DETECT
+#LINEFEED is one of: CR/LF/CRLF/LFCR/DETECT.

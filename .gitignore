@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+
+/.out
+/.vs
+/_prj_msvc/*.user
+/_prj_msvc/*.vcxproj_bak
+/test-util.bat
