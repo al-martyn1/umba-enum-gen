@@ -63,6 +63,8 @@ struct EnumGenerationArgs
     std::string  serializedNameStyle;
     std::string  enumElementPrefix  ;
     unsigned     generatorOptions   ;
+    unsigned     hexNumberWidth     ;
+    unsigned     octNumberWidth     ;
 };
 
 
@@ -102,6 +104,9 @@ marty_cpp::NameStyle              valuesNameStyle     = marty_cpp::NameStyle::pa
 marty_cpp::NameStyle              serializedNameStyle = marty_cpp::NameStyle::pascalStyle;
 std::string                       enumElementPrefix;
 unsigned                          enumGeneratorOptions   = 0;
+
+unsigned                          hexNumberWidth      = 8;
+unsigned                          octNumberWidth      = 3;
 
 
 std::vector<EnumGenerationArgs>   enumGenerationArgsList;
@@ -323,6 +328,9 @@ int main(int argc, char* argv[])
             marty_cpp::NameStyle enumNameStyle = marty_cpp::fromString(genArgs.enumNameStyle, marty_cpp::NameStyle::invalid);
             std::string enumName = marty_cpp::formatName( genArgs.enumName, enumNameStyle, true /* fixStartDigit */ );
        
+            genTpl.hexWidth = genArgs.hexNumberWidth;
+            genTpl.octWidth = genArgs.octNumberWidth;
+
             marty_cpp::enum_generate_serialize( oss
                                               , genArgs.valsText
                                               , std::string(indentSize, ' ') // indent

@@ -236,6 +236,40 @@ int operator()( const std::string                               &a           //!
             return 0;
         }
 
+        else if ( opt.setParam("N", 0, 0, 32)
+               || opt.isOption("hex-number-width") || opt.isOption("hex-width") || opt.isOption('B') 
+               || opt.setDescription("Set number width for hex format"))
+        {
+            if (argsParser.hasHelpOption) return 0;
+         
+            if (!opt.getParamValue( szVal, errMsg ) )
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+         
+            hexNumberWidth = (unsigned)szVal;
+         
+            return 0;
+        }
+
+        else if ( opt.setParam("N", 0, 0, 32)
+               || opt.isOption("oct-number-width") || opt.isOption("oct-width") || opt.isOption('B') 
+               || opt.setDescription("Set number width for oct format"))
+        {
+            if (argsParser.hasHelpOption) return 0;
+         
+            if (!opt.getParamValue( szVal, errMsg ) )
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+         
+            octNumberWidth = (unsigned)szVal;
+         
+            return 0;
+        }
+
         else if ( opt.setParam("N", 0, 0, 16)
                || opt.isOption("indent-increment") || opt.isOption("indent-inc") || opt.isOption('C') 
                || opt.setDescription("Set indent increment size - cur indent is base-indent+LEVEL*indent-inc"))
@@ -737,6 +771,8 @@ int operator()( const std::string                               &a           //!
             args.serializedNameStyle = marty_cpp::toString<std::string>(serializedNameStyle);
             args.enumElementPrefix   = enumElementPrefix;
             args.generatorOptions    = enumGeneratorOptions;
+            args.hexNumberWidth      = hexNumberWidth;
+            args.octNumberWidth      = octNumberWidth;
 
             enumGenerationArgsList.push_back(args);
 
