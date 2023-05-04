@@ -3,6 +3,10 @@ FileEpilog                              = \n
 
 NamespaceBegin                          = namespace $(NS){\n
 NamespaceEnd                            = } // $(NS)\n
+NamespaceNameFormat                     = N$(NS)
+
+EnumNameFormat                          = E$(ENAMNAME)
+EnumFlagsNameFormat                     = $(ENAMNAME)Flags
 
 EnumDeclarationBegin                    = enum $(CLASS)\
  $(ENAMNAME)

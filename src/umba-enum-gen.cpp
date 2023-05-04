@@ -312,6 +312,7 @@ int main(int argc, char* argv[])
                                                           , namespaceNameStyle // marty_cpp::NameStyle::defaultStyle //TODO: !!!
                                                           , genTpl.nsBegin
                                                           , genTpl.nsEnd
+                                                          , genTpl.nsNameFormat
                                                           );
 
 
