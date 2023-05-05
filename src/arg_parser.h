@@ -694,7 +694,7 @@ int operator()( const std::string                               &a           //!
         else if ( opt.setParam("NAME",umba::command_line::OptionType::optString)
                || opt.isOption("template") || opt.isOption('T')
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Specify template name for enum generation. If not take, 'default' template name will be used"
+               || opt.setDescription( "Specify template name for enum generation. If not taken, 'default' template name will be used"
                                     )
                 )
         {
@@ -707,6 +707,26 @@ int operator()( const std::string                               &a           //!
             }
 
             templateName = strVal;
+
+            return 0;
+        }
+
+        else if ( opt.setParam("NAME:VALUE",umba::command_line::OptionType::optString)
+               || opt.isOption("override-template-parameter") || opt.isOption("OTP")
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Override template parameter"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+
+            overrideTemplateParameters.emplace_back(strVal);
 
             return 0;
         }

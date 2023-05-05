@@ -108,6 +108,8 @@ unsigned                          enumGeneratorOptions   = 0;
 unsigned                          hexNumberWidth      = 8;
 unsigned                          octNumberWidth      = 3;
 
+std::vector<std::string>          overrideTemplateParameters;
+
 
 std::vector<EnumGenerationArgs>   enumGenerationArgsList;
 
@@ -232,9 +234,17 @@ int main(int argc, char* argv[])
     if (templateName.empty())
         templateName = "default";
 
+    if (targetLang.empty())
+    {
+        LOG_WARN_OPT("target") << "target language not defined, 'cpp' will be used'\n";
+        targetLang = "cpp";
+    }
+
+
     std::string templateFromConfFullName = targetLang + "/" + templateName + ".txt";
-    std::string mainTplCandidate = argsParser.programLocationInfo.getConfFilename("umba-enum-gen/" + templateFromConfFullName, false);
-    std::string userTplCandidate = argsParser.programLocationInfo.getConfFilename(templateFromConfFullName, true );
+    std::string userTplCandidate   = argsParser.programLocationInfo.getConfFilename(templateFromConfFullName, true );
+    std::string customTplCandidate = argsParser.programLocationInfo.getConfFilename(argsParser.programLocationInfo.exeName + ".custom/" + templateFromConfFullName, false);
+    std::string mainTplCandidate   = argsParser.programLocationInfo.getConfFilename(argsParser.programLocationInfo.exeName +        "/" + templateFromConfFullName, false);
     std::string templateFileName;
 
     marty_cpp::EnumGeneratorTemplate<std::string> genTpl; // = marty_cpp::EnumGeneratorTemplate<std::string>::defaultCpp();
@@ -245,6 +255,12 @@ int main(int argc, char* argv[])
         if (umba::filesys::readFile(userTplCandidate, templateData))
         {
             templateFileName = userTplCandidate;
+            return true;
+        }
+
+        if (umba::filesys::readFile(customTplCandidate, templateData))
+        {
+            templateFileName = customTplCandidate;
             return true;
         }
 
@@ -259,7 +275,7 @@ int main(int argc, char* argv[])
 
     if (!readTemplateFile())
     {
-        LOG_WARN_OPT("template") << "template not found in '" << userTplCandidate << "' nor in '" << mainTplCandidate << "'\n";
+        LOG_WARN_OPT("template") << "template not found in '" << userTplCandidate << "' nor in '" << customTplCandidate << "' nor in '" << mainTplCandidate << "'\n";
         LOG_WARN_OPT("template") << "default C++ template used\n";
         genTpl = marty_cpp::EnumGeneratorTemplate<std::string>::defaultCpp();
     }
@@ -289,6 +305,14 @@ int main(int argc, char* argv[])
     }
 
 
+    for(auto otp : overrideTemplateParameters)
+    {
+        if (!genTpl.checkAssignParam(otp))
+        {
+            LOG_ERR_OPT << "Invalid override template parameter value - '" << otp << "' (--override-template-parameter)" << "\n";
+            return 1;
+        }
+    }
 
     if (outputFilename.empty())
         outputFilename = "STDOUT";
