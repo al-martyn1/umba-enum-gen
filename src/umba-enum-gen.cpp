@@ -28,6 +28,7 @@
 #include "umba/scope_exec.h"
 #include "umba/macro_helpers.h"
 #include "umba/macros.h"
+#include "umba/scanners.h"
 
 #include "marty_cpp/marty_cpp.h"
 #include "marty_cpp/sort_includes.h"
@@ -193,7 +194,9 @@ int main(int argc, char* argv[])
             return 0;
 
         // Try to find project global flags
-        std::string projectFlagsFileName;
+        // !!!
+        std::string projectFlagsFileName = umba::scanners::scanForFlagsFile(std::string("umba-enum-gen-flags.txt"), umba::filesys::getCurrentDirectory<std::string>());
+        /*
         {
             std::string basePath = umba::filesys::getCurrentDirectory<std::string>();
             while(!basePath.empty())
@@ -211,8 +214,8 @@ int main(int argc, char* argv[])
             
                 basePath = nextBasePath;
             }
-
         }
+        */
 
         // report later about found project global flags file
 

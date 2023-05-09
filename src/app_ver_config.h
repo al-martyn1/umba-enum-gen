@@ -1,4 +1,4 @@
-std::string appFullName   = "Umba Enum Gen";
+std::string appFullName   = "Umba Enum's Genertor";
 std::string appVersion    = "1.0";
 std::string appCommitHash;  //UNDONE
 std::string appBuildDate  = __DATE__;
