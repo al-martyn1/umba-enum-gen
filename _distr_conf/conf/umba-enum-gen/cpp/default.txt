@@ -9,6 +9,8 @@ NamespaceBegin                          = namespace $(NS){\n
 NamespaceEnd                            = } // $(NS)\n
 NamespaceNameFormat                     = N$(NS)
 
+EnumDescriptionCommentFormat            = " /*! $(COMMENT) */"
+
 EnumNameFormat                          = E$(ENAMNAME)
 EnumFlagsNameFormat                     = $(ENAMNAME)Flags
 
@@ -28,7 +30,7 @@ EnumItemDeclarationSeparatorBefore      = ,\n
 EnumItemDeclarationSeparatorAfter       = ""
 
 EnumItemDeclaration                     = " $(ITEMNAME) = $(ITEMVAL)$(ITEMCOMMENT)"
-EnumItemComment                         = " /* $(ITEMCOMMENTTEXT) */"
+EnumItemComment                         = " /*!< $(ITEMCOMMENTTEXT) */"
 EnumFlagsDeclaration                    = MARTY_CPP_MAKE_ENUM_FLAGS($(ENAMNAME))\n
 
 EnumSerializationBegin                  = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_BEGIN( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"

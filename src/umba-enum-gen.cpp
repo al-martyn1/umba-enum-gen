@@ -57,6 +57,7 @@ struct EnumGenerationArgs
 {
     std::string  valsText           ;
     std::string  enumName           ;
+    std::string  enumComment        ;
     std::string  underlayingType    ;
     std::string  enumNameStyle      ;
     std::string  valuesNameStyle    ;
@@ -97,6 +98,7 @@ using marty_cpp::ELinefeedType;
 ELinefeedType                     outputLinefeed         = ELinefeedType::detect;
 
 std::string                       enumName;
+std::string                       enumComment;
 std::string                       underlayingType;
 marty_cpp::NameStyle              namespaceNameStyle  = marty_cpp::NameStyle::pascalStyle;
 marty_cpp::NameStyle              enumNameStyle       = marty_cpp::NameStyle::pascalStyle;
@@ -149,6 +151,20 @@ int main(int argc, char* argv[])
     // Force set CLI arguments while running under debugger
     if (umba::isDebuggerPresent())
     {
+        argsParser.args.clear();
+        argsParser.args.push_back("--options=0");
+        argsParser.args.push_back("--hex-width=4");
+        argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:F$(ENAMNAME)");
+        argsParser.args.push_back("--options=type-decl,enum-class,flags");
+        argsParser.args.push_back("--enum-name-style=PascalStyle");
+        argsParser.args.push_back("--enum-values-style=CamelStyle");
+        argsParser.args.push_back("--enum-serialize-style=HyphenStyle");
+        argsParser.args.push_back("--indent-increment=4");
+        argsParser.args.push_back("--namespace=test/ns");
+        argsParser.args.push_back("--enum-name=MyCoolEnum");
+        argsParser.args.push_back("--enum-definition=//Some kind of test enum;invalid:-1; begin-some=0x0; next=1; nextOne; hex=0x11; final");
+        // argsParser.args.push_back("");
+
         //argsParser.args.clear();
         //argsParser.args.push_back("@..\\tests\\data\\test01.rsp");
 
@@ -332,6 +348,7 @@ int main(int argc, char* argv[])
         // Генерим пролог и инклуды
         marty_cpp::enum_generate_prolog(oss, allGenerationOptions, genTpl);
         marty_cpp::enum_generate_includes(oss, allGenerationOptions, genTpl);
+        oss << "\n";
     }
 
 
@@ -355,10 +372,52 @@ int main(int argc, char* argv[])
             genTpl.hexWidth = genArgs.hexNumberWidth;
             genTpl.octWidth = genArgs.octNumberWidth;
 
+            std::string indentStr    = std::string(indentSize, ' '); // indent
+            std::string indentIncStr = std::string(indentInc , ' ');  // indentInc
+
+            genArgs.valsText = marty_cpp::simple_trim( genArgs.valsText
+                                                     , [](char ch)
+                                                       {
+                                                           if (ch==' ' || ch=='\t')
+                                                               return true;
+                                                           return false;
+                                                       }
+                                                     );
+
+
+            std::size_t startsLen = marty_cpp::sort_includes_utils::startsWith(genArgs.valsText.begin(), genArgs.valsText.end(), "//");
+            if (startsLen==2)
+            {
+                genArgs.valsText.erase(0, startsLen);
+                std::size_t endPos = genArgs.valsText.find_first_of(";\n");
+                if (endPos!=genArgs.valsText.npos)
+                {
+                    std::string comment = std::string(genArgs.valsText, 0, endPos);
+                    genArgs.valsText.erase(0, endPos+1);
+                    if (genArgs.enumComment.empty())
+                    {
+                        genArgs.enumComment = comment;
+                    }
+                }
+            }
+
+
+            if (!genArgs.enumComment.empty())
+            {
+                if ((genArgs.generatorOptions&marty_cpp::EnumGeneratorOptionFlags::noExtraLinefeed)==0)
+                    oss << "\n";
+
+                oss << "\n" << genTpl.formatComment(indentStr, genArgs.enumComment); // << "\n";
+
+                // Если запрещены ExtraLinefeed, то enum_generate_serialize не добавит перевод строки перед enum, и нам надо добавить его тут
+                if ((genArgs.generatorOptions&marty_cpp::EnumGeneratorOptionFlags::noExtraLinefeed)!=0)
+                    oss << "\n";
+            }
+
             marty_cpp::enum_generate_serialize( oss
                                               , genArgs.valsText
-                                              , std::string(indentSize, ' ') // indent
-                                              , std::string(indentInc, ' ')  // indentInc
+                                              , indentStr
+                                              , indentIncStr
                                               , enumName
                                               , genArgs.underlayingType
                                               , genArgs.valuesNameStyle

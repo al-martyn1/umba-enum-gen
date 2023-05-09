@@ -752,6 +752,26 @@ int operator()( const std::string                               &a           //!
         }
 
         else if ( opt.setParam("NAME",umba::command_line::OptionType::optString)
+               || opt.isOption("enum-comment") || opt.isOption("comment") || opt.isOption('m')
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Specify enum name for generation"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                //LOG_ERR_OPT<<errMsg<<"\n";
+                //return -1;
+            }
+
+            enumComment = strVal;
+
+            return 0;
+        }
+
+        else if ( opt.setParam("NAME",umba::command_line::OptionType::optString)
                || opt.isOption("enum-definition") || opt.isOption("definition") || opt.isOption('F')
                // || opt.setParam("VAL",true)
                || opt.setDescription( "Specify enum definition. Use '@' at first position to specify definition file instead of immediate definition"
@@ -785,6 +805,7 @@ int operator()( const std::string                               &a           //!
 
             args.valsText            = strVal;
             args.enumName            = enumName;
+            args.enumComment         = enumComment;
             args.underlayingType     = underlayingType;
             args.enumNameStyle       = marty_cpp::toString<std::string>(enumNameStyle);
             args.valuesNameStyle     = marty_cpp::toString<std::string>(valuesNameStyle);
@@ -797,6 +818,7 @@ int operator()( const std::string                               &a           //!
             enumGenerationArgsList.push_back(args);
 
             enumName.clear();
+            enumComment.clear();
             enumElementPrefix.clear();
 
             return 0;
