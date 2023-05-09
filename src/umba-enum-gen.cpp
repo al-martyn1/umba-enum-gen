@@ -191,6 +191,37 @@ int main(int argc, char* argv[])
             return 1;
         if (argsParser.mustExit)
             return 0;
+
+        // Try to find project global flags
+        std::string projectFlagsFileName;
+        {
+            std::string basePath = umba::filesys::getCurrentDirectory<std::string>();
+            while(!basePath.empty())
+            {
+                std::string testName = umba::filename::appendPath(basePath,std::string("umba-enum-gen-flags.txt"));
+                if (umba::filesys::isFileReadable(testName))
+                {
+                    projectFlagsFileName = testName;
+                    break;
+                }
+
+                std::string nextBasePath = umba::filename::getPath(basePath);
+                if (basePath==nextBasePath)
+                    break;
+            
+                basePath = nextBasePath;
+            }
+
+        }
+
+        // report later about found project global flags file
+
+        // вставляем flags file как response file на первое место
+        if (!projectFlagsFileName.empty())
+        {
+            argsParser.args.insert(argsParser.args.begin(), std::string("@")+projectFlagsFileName);
+        }
+
        
         if (!argsParser.parse())
             return 1;
@@ -218,6 +249,19 @@ int main(int argc, char* argv[])
     //                           , bool useUserConf
     //                           ) const
     //  
+
+    if (!argsParser.quet)
+    {
+        umba::cli_tool_helpers::printNameVersion(umbaLogStreamMsg);
+
+        // Отложенный вывод инфы о найденом flags файле
+        if (!projectFlagsFileName.empty())
+        {
+            umbaLogStreamMsg << "Found project umba-enum-gen flags file: " << projectFlagsFileName << "\n";
+        }
+    }
+
+
 
     unsigned allGenerationOptions = 0;
 
