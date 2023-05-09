@@ -35,6 +35,7 @@
 #include "marty_cpp/enums.h"
 #include "marty_cpp/src_normalization.h"
 #include "marty_cpp/marty_ns.h"
+#include "marty_cpp/marty_enum_impl_helpers.h"
 
 #include "encoding/encoding.h"
 #include "umba/cli_tool_helpers.h"
@@ -194,28 +195,7 @@ int main(int argc, char* argv[])
             return 0;
 
         // Try to find project global flags
-        // !!!
         std::string projectFlagsFileName = umba::scanners::scanForFlagsFile(std::string("umba-enum-gen-flags.txt"), umba::filesys::getCurrentDirectory<std::string>());
-        /*
-        {
-            std::string basePath = umba::filesys::getCurrentDirectory<std::string>();
-            while(!basePath.empty())
-            {
-                std::string testName = umba::filename::appendPath(basePath,std::string("umba-enum-gen-flags.txt"));
-                if (umba::filesys::isFileReadable(testName))
-                {
-                    projectFlagsFileName = testName;
-                    break;
-                }
-
-                std::string nextBasePath = umba::filename::getPath(basePath);
-                if (basePath==nextBasePath)
-                    break;
-            
-                basePath = nextBasePath;
-            }
-        }
-        */
 
         // report later about found project global flags file
 
@@ -242,16 +222,6 @@ int main(int argc, char* argv[])
     //     return -1;
     // }
 
-
-    // Прочитать файл с настройками шаблона
-    // --language --output-language --output-lang -L
-    // --template
-
-
-    // StringType getConfFilename( StringType fileName // name relative to conf root
-    //                           , bool useUserConf
-    //                           ) const
-    //  
 
     if (!argsParser.quet)
     {
@@ -431,23 +401,27 @@ int main(int argc, char* argv[])
                                                        }
                                                      );
 
+            std::string inlineEnumComment = marty_cpp::enum_impl_helpers::getStripEnumDefComment(genArgs.valsText);
+            // std::size_t startsLen = marty_cpp::sort_includes_utils::startsWith(genArgs.valsText.begin(), genArgs.valsText.end(), "//");
+            // if (startsLen==2)
+            // {
+            //     genArgs.valsText.erase(0, startsLen);
+            //     std::size_t endPos = genArgs.valsText.find_first_of(";\n");
+            //     if (endPos!=genArgs.valsText.npos)
+            //     {
+            //         std::string comment = std::string(genArgs.valsText, 0, endPos);
+            //         genArgs.valsText.erase(0, endPos+1);
+            //         if (genArgs.enumComment.empty())
+            //         {
+            //             genArgs.enumComment = comment;
+            //         }
+            //     }
+            // }
 
-            std::size_t startsLen = marty_cpp::sort_includes_utils::startsWith(genArgs.valsText.begin(), genArgs.valsText.end(), "//");
-            if (startsLen==2)
+            if (genArgs.enumComment.empty())
             {
-                genArgs.valsText.erase(0, startsLen);
-                std::size_t endPos = genArgs.valsText.find_first_of(";\n");
-                if (endPos!=genArgs.valsText.npos)
-                {
-                    std::string comment = std::string(genArgs.valsText, 0, endPos);
-                    genArgs.valsText.erase(0, endPos+1);
-                    if (genArgs.enumComment.empty())
-                    {
-                        genArgs.enumComment = comment;
-                    }
-                }
+                genArgs.enumComment = inlineEnumComment;
             }
-
 
             if (!genArgs.enumComment.empty())
             {

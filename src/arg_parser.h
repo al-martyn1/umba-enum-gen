@@ -891,6 +891,7 @@ int operator()( const std::string                               &a           //!
                               << " [OPTIONS] [output_file]\n"
                               << "  If output_file not taken, STDOUT used\n"
                               << "  Use 'CLPB'/'CLIPBRD' to use clipboard as output file\n"
+                              << "  Performs lookup for 'umba-enum-gen-flags.txt' up from current directory\n"
                               << "\nOptions:\n\n"
                               << helpText;
                               //<< " [OPTIONS] input_file [output_file]\n\nOptions:\n\n"<<helpText;
