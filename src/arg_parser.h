@@ -237,7 +237,7 @@ int operator()( const std::string                               &a           //!
         }
 
         else if ( opt.setParam("N", 0, 0, 32)
-               || opt.isOption("hex-number-width") || opt.isOption("hex-width") || opt.isOption('B') 
+               || opt.isOption("hex-number-width") || opt.isOption("hex-width") || opt.isOption('H') 
                || opt.setDescription("Set number width for hex format"))
         {
             if (argsParser.hasHelpOption) return 0;
@@ -254,7 +254,7 @@ int operator()( const std::string                               &a           //!
         }
 
         else if ( opt.setParam("N", 0, 0, 32)
-               || opt.isOption("oct-number-width") || opt.isOption("oct-width") || opt.isOption('B') 
+               || opt.isOption("oct-number-width") || opt.isOption("oct-width") || opt.isOption('8') 
                || opt.setDescription("Set number width for oct format"))
         {
             if (argsParser.hasHelpOption) return 0;
@@ -313,9 +313,9 @@ int operator()( const std::string                               &a           //!
         }
 
         else if ( opt.setParam("OPTFLAGS",umba::command_line::OptionType::optString)
-               || opt.isOption("options") || opt.isOption('O')
+               || opt.isOption("enum-generation-flags") || opt.isOption("enum-flags") || opt.isOption("flags") || opt.isOption("options") || opt.isOption('f')
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Enum generation options. Flags. Can be combined with ',', '+' or '|'. Can be taken multiple times and will be ORed with previous value\n"
+               || opt.setDescription( "Enum generation flags/options. Flags. Can be combined with ',', '+' or '|'. Can be taken multiple times and will be ORed with previous value\n"
                                       "Can be a combination of next values:\n"
                                       "0 - reset previously defined flags"
                                       "type-decl - generate enum type declaration"
@@ -754,7 +754,8 @@ int operator()( const std::string                               &a           //!
         else if ( opt.setParam("NAME",umba::command_line::OptionType::optString)
                || opt.isOption("enum-comment") || opt.isOption("comment") || opt.isOption('m')
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Specify enum name for generation"
+               || opt.setDescription( "Specify enum name for generation.\n"
+                                      "You can also use string starting with the '//', like '// Some enum description' as first line/item of the enum definition, but this option overrides enum description comment"
                                     )
                 )
         {
@@ -774,7 +775,15 @@ int operator()( const std::string                               &a           //!
         else if ( opt.setParam("NAME",umba::command_line::OptionType::optString)
                || opt.isOption("enum-definition") || opt.isOption("definition") || opt.isOption('F')
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Specify enum definition. Use '@' at first position to specify definition file instead of immediate definition"
+               || opt.setDescription( "Specify enum definition. Use '@' at first position to specify definition file instead of immediate definition\n"
+                                      "When this option encountered, enum parameters are stored in queue, and --enum-name, --enum-comment, --element-prefix values are cleared\n"
+                                      "Enum generation flags (--enum-generation-flags) will be inherited for the next enum definition. To reset enum generation flags use '--enum-generation-flags=0'\n"
+                                      "All other parameters are inherited by the next enum defs and must be overridden explicitly\n"
+                                      "Format of enum definition:\n"
+                                      "[// Enum description;] NAME[,ALIASES...] [(=|:)VALUE] [// Enum item comment]; [MORE_ITEM_DEFINITIONS...]\n"
+                                      "When enum definition file is used (with leading '@') the good idea place each item definition on a separate line, line break and ';' symbol means the same\n"
+                                      "Restrictions is in that you can't use ';', ':', '=' symbols in comment part\n"
+                                      "VALUE, if taken, can references to previously defined names. That names will be formatted properly. Mixed expressions of a names and constants are also allowed"
                                     )
                 )
         {
@@ -889,9 +898,10 @@ int operator()( const std::string                               &a           //!
                     //std::cout << "Usage: " << programLocationInfo.exeName
                     std::cout << "Usage: " << argsParser.programLocationInfo.exeName
                               << " [OPTIONS] [output_file]\n"
-                              << "  If output_file not taken, STDOUT used\n"
+                              << "  If output_file not taken, STDOUT used (can be tken explicitly)\n"
                               << "  Use 'CLPB'/'CLIPBRD' to use clipboard as output file\n"
-                              << "  Performs lookup for 'umba-enum-gen-flags.txt' up from current directory\n"
+                              << "  Performs lookup for 'umba-enum-gen-flags.txt' up from current directory - for project-related global umba-enum-gen options\n"
+                              << "  'umba-enum-gen-flags.txt', if found, processed after parsing builtins, but before processing currently taken options\n"
                               << "\nOptions:\n\n"
                               << helpText;
                               //<< " [OPTIONS] input_file [output_file]\n\nOptions:\n\n"<<helpText;
