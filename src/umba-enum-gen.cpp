@@ -31,6 +31,8 @@
 #include "umba/scanners.h"
 
 #include "marty_cpp/marty_cpp.h"
+#include "marty_cpp/marty_enum.h"
+#include "marty_cpp/marty_flags.h"
 #include "marty_cpp/sort_includes.h"
 #include "marty_cpp/enums.h"
 #include "marty_cpp/src_normalization.h"
@@ -88,6 +90,7 @@ bool bOverwrite         = false;
 std::size_t indentSize  = 0;
 std::size_t indentInc   = 0;
 bool bPrologEpilog      = true;
+bool bIncludes          = true;
 std::string namespacesStr;
 std::string targetLang;
 std::string templateName;
@@ -153,18 +156,32 @@ int main(int argc, char* argv[])
     // Force set CLI arguments while running under debugger
     if (umba::isDebuggerPresent())
     {
+        // argsParser.args.clear();
+        // argsParser.args.push_back("--options=0");
+        // argsParser.args.push_back("--hex-width=4");
+        // argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:F$(ENAMNAME)");
+        // argsParser.args.push_back("--options=type-decl,enum-class,flags");
+        // argsParser.args.push_back("--enum-name-style=PascalStyle");
+        // argsParser.args.push_back("--enum-values-style=CamelStyle");
+        // argsParser.args.push_back("--enum-serialize-style=HyphenStyle");
+        // argsParser.args.push_back("--indent-increment=4");
+        // argsParser.args.push_back("--namespace=test/ns");
+        // argsParser.args.push_back("--enum-name=MyCoolEnum");
+        // argsParser.args.push_back("--enum-definition=//Some kind of test enum;invalid:-1; begin-some=0x0; next=1; nextOne; hex=0x11; final");
+
         argsParser.args.clear();
-        argsParser.args.push_back("--options=0");
-        argsParser.args.push_back("--hex-width=4");
-        argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:F$(ENAMNAME)");
-        argsParser.args.push_back("--options=type-decl,enum-class,flags");
-        argsParser.args.push_back("--enum-name-style=PascalStyle");
-        argsParser.args.push_back("--enum-values-style=CamelStyle");
-        argsParser.args.push_back("--enum-serialize-style=HyphenStyle");
-        argsParser.args.push_back("--indent-increment=4");
-        argsParser.args.push_back("--namespace=test/ns");
-        argsParser.args.push_back("--enum-name=MyCoolEnum");
-        argsParser.args.push_back("--enum-definition=//Some kind of test enum;invalid:-1; begin-some=0x0; next=1; nextOne; hex=0x11; final");
+        argsParser.args.push_back("@../_libs/marty_cpp/_generators/enums.rsp");
+        argsParser.args.push_back("--enum-flags=enum-class,type-decl,serialize,deserialize,lowercase");
+        argsParser.args.push_back("-N=marty_cpp");
+        argsParser.args.push_back("-E=LinefeedType");
+        argsParser.args.push_back("-F=invalid,unknown=-1;detect=0;lf;cr;lfcr;crlf;");
+        argsParser.args.push_back("--enum-flags=extra,flags");
+        argsParser.args.push_back("--underlaying-type=std::uint32_t");
+        argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:$(ENAMNAME)");
+        argsParser.args.push_back("-E=EnumGeneratorOptionFlagsSerializable");
+        argsParser.args.push_back("-F=@../_libs/marty_cpp/_generators/EnumGeneratorOptionFlagsSerializable.txt");
+        argsParser.args.push_back("../enums2.h");
+
         // argsParser.args.push_back("");
 
         //argsParser.args.clear();
@@ -364,7 +381,10 @@ int main(int argc, char* argv[])
     {
         // Генерим пролог и инклуды
         marty_cpp::enum_generate_prolog(oss, allGenerationOptions, genTpl);
-        marty_cpp::enum_generate_includes(oss, allGenerationOptions, genTpl);
+        if (bIncludes)
+        {
+            marty_cpp::enum_generate_includes(oss, allGenerationOptions, genTpl);
+        }
         oss << "\n";
     }
 
@@ -433,6 +453,13 @@ int main(int argc, char* argv[])
                 // Если запрещены ExtraLinefeed, то enum_generate_serialize не добавит перевод строки перед enum, и нам надо добавить его тут
                 if ((genArgs.generatorOptions&marty_cpp::EnumGeneratorOptionFlags::noExtraLinefeed)!=0)
                     oss << "\n";
+            }
+
+            unsigned generatorOptions = genArgs.generatorOptions;
+            std::unordered_set<std::string>::const_iterator uit = unsignedTypes.find(genArgs.underlayingType);
+            if (uit!=unsignedTypes.end())
+            {
+                generatorOptions |= marty_cpp::EnumGeneratorOptionFlags::unsignedVals;
             }
 
             marty_cpp::enum_generate_serialize( oss

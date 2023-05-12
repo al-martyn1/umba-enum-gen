@@ -7,7 +7,8 @@ FileEpilog                              = \n
 
 NamespaceBegin                          = namespace $(NS){\n
 NamespaceEnd                            = } // $(NS)\n
-NamespaceNameFormat                     = N$(NS)
+NamespaceNameFormat                     = $(NS)
+#NamespaceNameFormat                     = N$(NS)
 
 EnumDescriptionCommentFormat            = " /*! $(COMMENT) */"
 
@@ -35,11 +36,11 @@ EnumFlagsDeclaration                    = MARTY_CPP_MAKE_ENUM_FLAGS($(ENAMNAME))
 
 EnumSerializationBegin                  = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_BEGIN( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
 EnumSerializationEnd                    = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_END( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
-EnumSerializationItem                   = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_ITEM( $(ITEMNAME), $(ITEMVAL) )"
+EnumSerializationItem                   = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_ITEM( $(ITEMNAME) , $(ITEMVAL) )"
 
 EnumDeserializationBegin                = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_BEGIN( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
 EnumDeserializationEnd                  = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_END( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
-EnumDeserializationItem                 = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_ITEM( $(ITEMNAME), $(ITEMVAL) )"
+EnumDeserializationItem                 = " MARTY_CPP_ENUM$(PPCLASS)_DESERIALIZE_ITEM( $(ITEMNAME) , $(ITEMVAL) )"
 
 EnumItemSerializeBeforeFirst            = ""
 EnumItemSerializeBefore                 = ""

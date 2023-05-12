@@ -219,6 +219,25 @@ int operator()( const std::string                               &a           //!
             return 0;
         }
 
+        else if ( opt.setParam("?MODE",true)
+               || opt.isOption("includes") || opt.isOption('i') 
+               // || opt.setParam("VAL",true)
+               || opt.setDescription("Enabling/disabling generation of includes even if prolog is enabled"))
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(boolVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+            
+            bIncludes = boolVal;
+            return 0;
+        }
+
+
+
         else if ( opt.setParam("N", 0, 0, 128)
                || opt.isOption("base-indent") || opt.isOption("indent") || opt.isOption('B') 
                || opt.setDescription("Set base indent size"))
@@ -317,8 +336,8 @@ int operator()( const std::string                               &a           //!
                // || opt.setParam("VAL",true)
                || opt.setDescription( "Enum generation flags/options. Flags. Can be combined with ',', '+' or '|'. Can be taken multiple times and will be ORed with previous value\n"
                                       "Can be a combination of next values:\n"
-                                      "0 - reset previously defined flags"
-                                      "type-decl - generate enum type declaration"
+                                      "0 - reset previously defined flags\n"
+                                      "type-decl - generate enum type declaration\n"
                                       "enum-class - generate enum class instead of unscoped enum\n"
                                       "flags - generate flags with bitwise operators defined\n"
                                       "serialize - generate serialization\n"
