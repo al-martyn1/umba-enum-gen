@@ -6,7 +6,7 @@ FileProlog                              = #pragma once\n
 FileEpilog                              = \n
 
 NamespaceBegin                          = namespace $(NS){\n
-NamespaceEnd                            = } // $(NS)\n
+NamespaceEnd                            = } // namespace $(NS)\n
 NamespaceNameFormat                     = $(NS)
 #NamespaceNameFormat                     = N$(NS)
 
