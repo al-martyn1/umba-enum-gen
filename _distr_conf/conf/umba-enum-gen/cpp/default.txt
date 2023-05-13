@@ -12,8 +12,10 @@ NamespaceNameFormat                     = $(NS)
 
 EnumDescriptionCommentFormat            = " /*! $(COMMENT) */"
 
-EnumNameFormat                          = E$(ENAMNAME)
-EnumFlagsNameFormat                     = $(ENAMNAME)Flags
+#EnumNameFormat                          = E$(ENAMNAME)
+EnumNameFormat                          = $(ENAMNAME)
+#EnumFlagsNameFormat                     = $(ENAMNAME)Flags
+EnumFlagsNameFormat                     = $(ENAMNAME)
 
 EnumDeclarationBegin                    = enum $(CLASS)\
  $(ENAMNAME)
