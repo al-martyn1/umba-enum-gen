@@ -212,7 +212,8 @@ int main(int argc, char* argv[])
             return 0;
 
         // Try to find project global flags
-        std::string projectFlagsFileName = umba::scanners::scanForFlagsFile(std::string("umba-enum-gen-flags.txt"), umba::filesys::getCurrentDirectory<std::string>());
+        //umba-enum-gen-options.txt
+        std::string projectFlagsFileName = umba::scanners::scanForOptionsFile(std::vector<std::string>{"umba-enum-gen-options.txt", "umba-enum-gen-flags.txt"}, umba::filesys::getCurrentDirectory<std::string>());
 
         // report later about found project global flags file
 
