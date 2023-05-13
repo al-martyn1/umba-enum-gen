@@ -410,6 +410,7 @@ int operator()( const std::string                               &a           //!
                                       // "HyphenStyle - lowercase name parts separated by hyphen\n"
                                       // "HyphenCamelMixedStyle - name parts separated by hyphen, first is in lowercase, next ones - PascalStyle\n"
                                       // "HyphenPascalMixedStyle - name parts separated by hyphen, all part in PascalStyle\n"
+                                      "DefaultStyle - use name as is\n"
                                       "CppStyle - lowercase name parts separated by underscore\n"
                                       "CamelStyle - first name part is in lowercase, next ones - PascalStyle\n"
                                       "PascalStyle - all name parts starts with uppercas letter\n"
@@ -442,6 +443,11 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defineStyle:
                 // case marty_cpp::NameStyle:::
                     break;
+
+                case marty_cpp::NameStyle::defaultStyle:
+                    if (strVal=="DefaultStyle")
+                        break;
+
                 default:
                     LOG_ERR_OPT << "Invalid enum name style value: '" << strVal << "' (--namespace-name-style)\n"; // , --options\n"
                     return -1;
@@ -459,6 +465,7 @@ int operator()( const std::string                               &a           //!
                                       // "HyphenStyle - lowercase name parts separated by hyphen\n"
                                       // "HyphenCamelMixedStyle - name parts separated by hyphen, first is in lowercase, next ones - PascalStyle\n"
                                       // "HyphenPascalMixedStyle - name parts separated by hyphen, all part in PascalStyle\n"
+                                      "DefaultStyle - use name as is\n"
                                       "CppStyle - lowercase name parts separated by underscore\n"
                                       "CamelStyle - first name part is in lowercase, next ones - PascalStyle\n"
                                       "PascalStyle - all name parts starts with uppercas letter\n"
@@ -491,6 +498,11 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defineStyle:
                 // case marty_cpp::NameStyle:::
                     break;
+
+                case marty_cpp::NameStyle::defaultStyle:
+                    if (strVal=="DefaultStyle")
+                        break;
+
                 default:
                     LOG_ERR_OPT << "Invalid enum name style value: '" << strVal << "' (--enum-name-style)\n"; // , --options\n"
                     return -1;
@@ -508,6 +520,7 @@ int operator()( const std::string                               &a           //!
                                       // "HyphenStyle - lowercase name parts separated by hyphen\n"
                                       // "HyphenCamelMixedStyle - name parts separated by hyphen, first is in lowercase, next ones - PascalStyle\n"
                                       // "HyphenPascalMixedStyle - name parts separated by hyphen, all part in PascalStyle\n"
+                                      "DefaultStyle - use name as is\n"
                                       "CppStyle - lowercase name parts separated by underscore\n"
                                       "CamelStyle - first name part is in lowercase, next ones - PascalStyle\n"
                                       "PascalStyle - all name parts starts with uppercas letter\n"
@@ -540,6 +553,11 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defineStyle:
                 // case marty_cpp::NameStyle:::
                     break;
+
+                case marty_cpp::NameStyle::defaultStyle:
+                    if (strVal=="DefaultStyle")
+                        break;
+
                 default:
                     LOG_ERR_OPT << "Invalid enum values style value: '" << strVal << "' (--enum-values-style)\n"; // , --options\n"
                     return -1;
@@ -556,6 +574,7 @@ int operator()( const std::string                               &a           //!
                                       //""
                                       "Can be one of (default is PascalStyle):\n"
                                       "All - generate all style names for deserialization. If this serialize value name style taken, PascalStyle names used to serialize value\n"
+                                      "DefaultStyle - use name as is\n"
                                       "HyphenStyle - lowercase name parts separated by hyphen\n"
                                       "HyphenCamelMixedStyle - name parts separated by hyphen, first is in lowercase, next ones - PascalStyle\n"
                                       "HyphenPascalMixedStyle - name parts separated by hyphen, all part in PascalStyle\n"
@@ -591,6 +610,11 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defineStyle:
                 // case marty_cpp::NameStyle:::
                     break;
+
+                case marty_cpp::NameStyle::defaultStyle:
+                    if (strVal=="DefaultStyle")
+                    break;
+
                 default:
                     LOG_ERR_OPT << "Invalid enum serialize/deserialize names style value: '" << strVal << "' (--enum-serialize-style)\n"; // , --options\n"
                     return -1;

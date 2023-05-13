@@ -459,6 +459,10 @@ int main(int argc, char* argv[])
             std::unordered_set<std::string>::const_iterator uit = unsignedTypes.find(genArgs.underlayingType);
             if (uit!=unsignedTypes.end())
             {
+                if (!argsParser.quet)
+                {
+                    // umbaLogStreamMsg << "Detected unsigned type - '" << genArgs.underlayingType << "'\n";
+                }
                 generatorOptions |= marty_cpp::EnumGeneratorOptionFlags::unsignedVals;
             }
 
@@ -471,7 +475,7 @@ int main(int argc, char* argv[])
                                               , genArgs.valuesNameStyle
                                               , genArgs.serializedNameStyle
                                               , genArgs.enumElementPrefix
-                                              , genArgs.generatorOptions
+                                              , generatorOptions
                                               , genTpl
                                               , &dups
                                               );
