@@ -506,6 +506,11 @@ int main(int argc, char* argv[])
 
     try
     {
+        if (!argsParser.quet)
+        {
+            umbaLogStreamMsg << "Writting output to: "<<outputFilename<<"\n";
+        }
+
         umba::cli_tool_helpers::writeOutput( outputFilename, outputFileType
                                            , encoding::ToUtf8(), encoding::FromUtf8()
                                            , resultText, std::string() // bomData
@@ -518,6 +523,11 @@ int main(int argc, char* argv[])
         return 1;
     }
    
+    if (!argsParser.quet)
+    {
+        umbaLogStreamMsg << "umba-enum-gen: Done\n";
+    }
+
    
     #if 0
     try
