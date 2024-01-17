@@ -35,6 +35,7 @@ EnumItemDeclarationSeparatorAfter       = ""
 EnumItemDeclaration                     = " $(ITEMNAME) = $(ITEMVAL)$(ITEMCOMMENT)"
 EnumItemComment                         = " /*!< $(ITEMCOMMENTTEXT) */"
 EnumFlagsDeclaration                    = MARTY_CPP_MAKE_ENUM_FLAGS($(ENAMNAME))\n
+EnumNonFlagsDeclaration                 = MARTY_CPP_MAKE_ENUM_IS_FLAGS_FOR_NON_FLAGS_ENUM($(ENAMNAME))\n
 
 EnumSerializationBegin                  = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_BEGIN( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
 EnumSerializationEnd                    = " MARTY_CPP_ENUM$(PPCLASS)_SERIALIZE_END( $(ENAMNAME), $(MAPTYPE), $(UPPERFLAG) )\n"
