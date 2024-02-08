@@ -405,8 +405,8 @@ int main(int argc, char* argv[])
             std::vector<std::string> dups;
        
             marty_cpp::NameStyle enumNameStyle = marty_cpp::fromString(genArgs.enumNameStyle, marty_cpp::NameStyle::invalid);
-            std::string enumName = marty_cpp::formatName( genArgs.enumName, enumNameStyle, true /* fixStartDigit */ );
-       
+            std::string enumName = marty_cpp::formatName( genArgs.enumName, enumNameStyle, true /* fixStartDigit */, true /* fixKeywords */ );
+
             genTpl.hexWidth = genArgs.hexNumberWidth;
             genTpl.octWidth = genArgs.octNumberWidth;
 
