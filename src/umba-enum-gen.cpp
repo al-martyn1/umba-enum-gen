@@ -369,7 +369,7 @@ int main(int argc, char* argv[])
         outputFilename = "STDOUT";
 
     umba::cli_tool_helpers::IoFileType outputFileType =
-        umba::cli_tool_helpers::detectFilenameType(outputFilename, false /* bInput */);
+    umba::cli_tool_helpers::detectFilenameType(outputFilename, false /* bInput */);
 
     std::ostringstream oss;
 
