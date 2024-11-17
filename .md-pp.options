@@ -1,0 +1,26 @@
+#--serialize-meta-tags=+title,author,description,date,language
+--serialize-meta-tags=-
+#--processing-options=meta-data
+#--processing-options=no-meta-data
+--processing-options=generate-toc,meta-data,force-insert-meta,document-meta-title
+--document-meta-tags=author,url
+--verbose
+--info=+all
+# --info=-plantuml,-opt-files,-snippet-lookup
+--generated-output-path=.\doc\img.generated
+# --graphviz-output-path=.\doc\.generated_images
+# --plant-uml-output-path=.\doc\.generated_images
+--document-language=russian
+#--processing-options=transliterate-generated-filenames
+# --copy-images
+# --flatten-image-links
+--viewer-copy-render-to-source-location
+#--viewer-render-copy-use-doc-title
+#--set-var=INSERT_DOC_FILENAME_MACRO_TEST:by_macro2
+--set-var=^insert_doc_filename_macro_test:by_macro2
+
+--add-examples-path=.\doc
+--add-examples-path=.\doc.drafts
+--add-examples-path=.\conf
+--add-examples-path=.\tests\snippets
+--add-examples-path=.\src

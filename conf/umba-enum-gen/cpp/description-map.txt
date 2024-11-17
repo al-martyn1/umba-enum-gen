@@ -1,0 +1,74 @@
+OctNumberFormat                         = 0$(VALUE)
+DecNumberFormat                         = $(VALUE)
+HexNumberFormat                         = 0x$(VALUE)
+
+FileProlog                              = #pragma once\n
+FileEpilog                              = \n
+
+NamespaceBegin                          = namespace $(NS){\n
+NamespaceEnd                            = } // namespace $(NS)\n
+NamespaceNameFormat                     = $(NS)
+#NamespaceNameFormat                     = N$(NS)
+
+EnumDescriptionCommentFormat            = ""
+#""$(COMMENT)""
+
+#EnumNameFormat                          = E$(ENAMNAME)
+EnumNameFormat                          = $(ENAMNAME)
+#EnumFlagsNameFormat                     = $(ENAMNAME)Flags
+EnumFlagsNameFormat                     = $(ENAMNAME)
+
+EnumDeclarationBegin                    = " inline std::unordered_map<$(ENAMNAME), std::string> make$(ENAMNAME)DescriptionMap()"
+ 
+EnumDeclarationWithUnderlyingTypeBegin  = " inline std::unordered_map<$(ENAMNAME), std::string> make$(ENAMNAME)DescriptionMap()"
+EnumDeclarationClassKeyword             = ""
+
+TypeCast                                = ""
+
+EnumScopeBegin                          = \n$(INDENT){
+EnumScopeEnd                            = \n};\nreturn m;\n} // $(DECLBEGIN)\n
+
+EnumItemDeclarationSeparatorBeforeFirst = \nstd::unordered_map<$(ENAMNAME), std::string> m =\n{\n 
+EnumItemDeclarationSeparatorBefore      = ,\n
+EnumItemDeclarationSeparatorAfter       = "" 
+
+EnumItemDeclaration                     = "{ $(ENAMNAME)::$(ITEMNAME), $(ITEMCOMMENT) }"
+EnumItemComment                         = ""$(ITEMCOMMENTTEXT)""
+EnumFlagsDeclaration                    = ""
+EnumNonFlagsDeclaration                 = ""
+
+EnumSerializationBegin                  = ""
+EnumSerializationEnd                    = ""
+EnumSerializationItem                   = ""
+
+EnumDeserializationBegin                = ""
+EnumDeserializationEnd                  = ""
+EnumDeserializationItem                 = ""
+
+EnumItemSerializeBeforeFirst            = ""
+EnumItemSerializeBefore                 = ""
+EnumItemSerializeAfter                  = ""
+
+EnumSerializeSet                        = ""
+EnumDeserializeSet                      = ""
+EnumSerializeSetType                    = ""
+
+EnumUserIncludeFormat                   = #include \"$(FILENAME)\"
+EnumSystemIncludeFormat                 = #include <$(FILENAME)>
+
+EnumIncludesBefore                      = \n
+EnumIncludesAfter                       = \n
+EnumIncludesEntrySeparator              = \n
+EnumIncludesGroupSeparator              = \n
+EnumIncludesBlockSeparator              = \n
+
+EnumDeclarationIncludes                 = 
+#marty_cpp/marty_ns.h
+EnumFlagDeclarationIncludes             = marty_cpp/marty_flag_ops.h
+EnumSerializationIncludes               = <unordered_map>, <map>, <string>, <exception>, <stdexcept>, marty_cpp/marty_enum.h
+EnumDeserializationIncludes             = <unordered_map>, <map>, <string>, <exception>, <stdexcept>, marty_cpp/marty_enum.h
+EnumFlagIncludes                        = marty_cpp/marty_flags.h
+EnumSetIncludes                         = <unordered_set>, <set>
+
+
+

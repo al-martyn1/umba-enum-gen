@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stack>
+#include <string>
 
 //#include "app_config.h"
 #include "umba/cmd_line.h"
@@ -24,7 +25,7 @@ std::string makeAbsPath( std::string p )
     std::string basePath;
 
     if (optFiles.empty())
-        basePath = umba::filesys::getCurrentDirectory<std::string>();
+        basePath = umba::filesys::getCurrentDirectory();
     else
         basePath = umba::filename::getPath(optFiles.top());
 
