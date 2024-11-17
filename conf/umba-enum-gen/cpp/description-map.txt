@@ -18,9 +18,9 @@ EnumNameFormat                          = $(ENAMNAME)
 #EnumFlagsNameFormat                     = $(ENAMNAME)Flags
 EnumFlagsNameFormat                     = $(ENAMNAME)
 
-EnumDeclarationBegin                    = " inline std::unordered_map<$(ENAMNAME), std::string> make$(ENAMNAME)DescriptionMap()"
+EnumDeclarationBegin                    = " inline std::map<$(ENAMNAME), std::string> make$(ENAMNAME)DescriptionMap()"
  
-EnumDeclarationWithUnderlyingTypeBegin  = " inline std::unordered_map<$(ENAMNAME), std::string> make$(ENAMNAME)DescriptionMap()"
+EnumDeclarationWithUnderlyingTypeBegin  = " inline std::map<$(ENAMNAME), std::string> make$(ENAMNAME)DescriptionMap()"
 EnumDeclarationClassKeyword             = ""
 
 TypeCast                                = ""
@@ -28,7 +28,7 @@ TypeCast                                = ""
 EnumScopeBegin                          = \n$(INDENT){
 EnumScopeEnd                            = \n};\nreturn m;\n} // $(DECLBEGIN)\n
 
-EnumItemDeclarationSeparatorBeforeFirst = \nstd::unordered_map<$(ENAMNAME), std::string> m =\n{\n 
+EnumItemDeclarationSeparatorBeforeFirst = \nstd::map<$(ENAMNAME), std::string> m =\n{\n 
 EnumItemDeclarationSeparatorBefore      = ,\n
 EnumItemDeclarationSeparatorAfter       = "" 
 
@@ -64,7 +64,7 @@ EnumIncludesBlockSeparator              = \n
 
 EnumDeclarationIncludes                 = 
 #marty_cpp/marty_ns.h
-EnumFlagDeclarationIncludes             = marty_cpp/marty_flag_ops.h
+EnumFlagDeclarationIncludes             = <unordered_map>, <map>, marty_cpp/marty_flag_ops.h
 EnumSerializationIncludes               = <unordered_map>, <map>, <string>, <exception>, <stdexcept>, marty_cpp/marty_enum.h
 EnumDeserializationIncludes             = <unordered_map>, <map>, <string>, <exception>, <stdexcept>, marty_cpp/marty_enum.h
 EnumFlagIncludes                        = marty_cpp/marty_flags.h
