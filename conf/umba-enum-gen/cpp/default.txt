@@ -17,16 +17,20 @@ EnumNameFormat                          = $(ENAMNAME)
 #EnumFlagsNameFormat                     = $(ENAMNAME)Flags
 EnumFlagsNameFormat                     = $(ENAMNAME)
 
-EnumDeclarationBegin                    = enum $(CLASS)\
- $(ENAMNAME)
-EnumDeclarationWithUnderlyingTypeBegin  = " enum $(CLASS) $(ENAMNAME) :\
- $(UNDERLYING)"
+EnumDeclarationBegin                    = "//#!$(ENAMNAME)\n\
+enum $(CLASS) $(ENAMNAME)"
+
+EnumDeclarationWithUnderlyingTypeBegin  = "//#!$(ENAMNAME)\n\
+enum $(CLASS) $(ENAMNAME) : $(UNDERLYING)"
+
 EnumDeclarationClassKeyword             = class
 
 TypeCast                                = ($(UNDERLYING))($(ITEMVAL))
 
 EnumScopeBegin                          = \n$(INDENT){
-EnumScopeEnd                            = \n\n$(INDENT)}; // $(DECLBEGIN)\n
+# EnumScopeEnd                            = "\n\n$(INDENT)}; // $(DECLBEGIN)\n//#!\n"
+# EnumScopeEnd                            = "\n\n$(INDENT)}; // enum $(ENAMNAME)\n//#!\n"
+EnumScopeEnd                            = "\n\n$(INDENT)}; // enum \n//#!\n"
 
 EnumItemDeclarationSeparatorBeforeFirst = \n
 EnumItemDeclarationSeparatorBefore      = ,\n
