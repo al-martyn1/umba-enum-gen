@@ -42,6 +42,7 @@
 #include "encoding/encoding.h"
 #include "umba/cli_tool_helpers.h"
 #include "umba/time_service.h"
+#include "umba/shellapi.h"
 
 
 #if defined(WIN32) || defined(_WIN32)
@@ -156,7 +157,14 @@ int main(int argc, char* argv[])
     // Force set CLI arguments while running under debugger
     if (umba::isDebuggerPresent())
     {
-        // argsParser.args.clear();
+        argsParser.args.clear();
+        argsParser.args.push_back("--overwrite");
+
+        std::string cwd;
+        std::string rootPath = umba::shellapi::getDebugAppRootFolder(&cwd);
+        std::cout << "Working Dir: " << cwd << "\n";
+        std::cout << "Root Path  : " << rootPath << "\n";
+
         // argsParser.args.push_back("--options=0");
         // argsParser.args.push_back("--hex-width=4");
         // argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:F$(ENAMNAME)");
@@ -169,18 +177,17 @@ int main(int argc, char* argv[])
         // argsParser.args.push_back("--enum-name=MyCoolEnum");
         // argsParser.args.push_back("--enum-definition=//Some kind of test enum;invalid:-1; begin-some=0x0; next=1; nextOne; hex=0x11; final");
 
-        argsParser.args.clear();
-        argsParser.args.push_back("@../_libs/marty_cpp/_generators/enums.rsp");
+        argsParser.args.push_back("@" + rootPath + "_libs/marty_cpp/_generators/enums.rsp");
         argsParser.args.push_back("--enum-flags=enum-class,type-decl,serialize,deserialize,lowercase");
         argsParser.args.push_back("-N=marty_cpp");
         argsParser.args.push_back("-E=LinefeedType");
-        argsParser.args.push_back("-F=invalid,unknown=-1;detect=0;lf;cr;lfcr;crlf;");
+        //argsParser.args.push_back("-F=invalid,unknown=-1;detect=0;lf;cr;lfcr;crlf;");
         argsParser.args.push_back("--enum-flags=extra,flags");
         argsParser.args.push_back("--underlaying-type=std::uint32_t");
         argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:$(ENAMNAME)");
         argsParser.args.push_back("-E=EnumGeneratorOptionFlagsSerializable");
-        argsParser.args.push_back("-F=@../_libs/marty_cpp/_generators/EnumGeneratorOptionFlagsSerializable.txt");
-        argsParser.args.push_back("../enums2.h");
+        argsParser.args.push_back("-F=@" + rootPath + "_libs/marty_cpp/_generators/TestNumParsing.txt");
+        argsParser.args.push_back(rootPath + "../enums2.h");
 
         // argsParser.args.push_back("");
 
