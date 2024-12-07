@@ -993,7 +993,7 @@ int operator()( const std::string                               &a           //!
 
     //appConfig.outputName = makeAbsPath(a);
 
-    outputFilename = a;
+    outputFilename = argsParser.makeAbsPath(a);
 
     return 0;
 

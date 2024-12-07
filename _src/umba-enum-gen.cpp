@@ -17,7 +17,6 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
-#include <filesystem>
 #include <unordered_map>
 #include <unordered_set>
 #include <tuple>
@@ -154,14 +153,15 @@ int main(int argc, char* argv[])
                                                             )
                                                         );
 
+    std::string cwd;
+    std::string rootPath = umba::shellapi::getDebugAppRootFolder(&cwd);
+
     // Force set CLI arguments while running under debugger
     if (umba::isDebuggerPresent())
     {
         argsParser.args.clear();
         argsParser.args.push_back("--overwrite");
 
-        std::string cwd;
-        std::string rootPath = umba::shellapi::getDebugAppRootFolder(&cwd);
         std::cout << "Working Dir: " << cwd << "\n";
         std::cout << "Root Path  : " << rootPath << "\n";
 
@@ -515,7 +515,9 @@ int main(int argc, char* argv[])
     {
         if (!argsParser.quet)
         {
-            umbaLogStreamMsg << "Writting output to: "<<outputFilename<<"\n";
+            
+            umbaLogStreamMsg << "Current working dir: "<<cwd<<"\n";
+            umbaLogStreamMsg << "Writting output to : "<<outputFilename<<"\n";
         }
 
         umba::cli_tool_helpers::writeOutput( outputFilename, outputFileType
