@@ -59,6 +59,7 @@
 
 struct EnumGenerationArgs
 {
+    bool         fromFile           = false;
     std::string  valsText           ;
     std::string  enumName           ;
     std::string  enumComment        ;
@@ -155,6 +156,18 @@ int main(int argc, char* argv[])
 
     std::string cwd;
     std::string rootPath = umba::shellapi::getDebugAppRootFolder(&cwd);
+
+
+    // // std::vector<StringType> simpleProcessLineContinuations(const std::vector<StringType> &v)
+    // if (umba::isDebuggerPresent())
+    // {
+    //     //simpleProcessLineContinuations
+    //     auto vec = marty_cpp::simple_string_split(std::string("\\aa\\\nbbb\nccc\nddd\\\neee\n"), marty_cpp::make_string<std::string>("\n") /* , typename StringType::size_type nSplits = -1 */ );
+    //     vec = marty_cpp::simple_process_line_continuations(vec);
+    //  
+    //     // 4817, 4819
+    //     std::cout << "simple_process_line_continuations\n";
+    // }
 
     // Force set CLI arguments while running under debugger
     if (umba::isDebuggerPresent())
@@ -472,6 +485,11 @@ int main(int argc, char* argv[])
                     // umbaLogStreamMsg << "Detected unsigned type - '" << genArgs.underlayingType << "'\n";
                 }
                 generatorOptions |= marty_cpp::EnumGeneratorOptionFlags::unsignedVals;
+            }
+
+            if (!genArgs.fromFile)
+            {
+                genArgs.valsText = marty_cpp::simple_string_replace<std::string>(genArgs.valsText, marty_cpp::make_string<std::string>(";"), marty_cpp::make_string<std::string>("\n") );
             }
 
             marty_cpp::enum_generate_serialize( oss

@@ -816,10 +816,10 @@ int operator()( const std::string                               &a           //!
             return 0;
         }
 
-        else if ( opt.setParam("NAME",umba::command_line::OptionType::optString)
+        else if ( opt.setParam("ENUMDEF",umba::command_line::OptionType::optString)
                || opt.isOption("enum-definition") || opt.isOption("definition") || opt.isOption('F')
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Specify enum definition. Use '@' at first position to specify definition file instead of immediate definition\n"
+               || opt.setDescription( "Specify enum definition. Use '@' at first position to specify definition file instead of immediate definition (-F=@EnumDefFile.txt)\n"
                                       "When this option encountered, enum parameters are stored in queue, and --enum-name, --enum-comment, --element-prefix values are cleared\n"
                                       "Enum generation flags (--enum-generation-flags) will be inherited for the next enum definition. To reset enum generation flags use '--enum-generation-flags=0'\n"
                                       "All other parameters are inherited by the next enum defs and must be overridden explicitly\n"
@@ -847,14 +847,15 @@ int operator()( const std::string                               &a           //!
 
             //!!! std::string makeAbsPath( std::string p )
 
+            EnumGenerationArgs args;
+
             if (!strVal.empty() && strVal[0]=='@')
             {
                 // read from file
                 std::string enumDefFileName = std::string(strVal, 1, strVal.size()-1);
                 strVal = std::string("@") + makeAbsPath(enumDefFileName);
+                args.fromFile = true;
             }
-
-            EnumGenerationArgs args;
 
             args.valsText            = strVal;
             args.enumName            = enumName;
