@@ -1,9 +1,9 @@
 @if exist "%~dp0\set_sln.bat"  @call "%~dp0\set_sln.bat"
 @if exist "%~dp0\set_sln_exes.bat"  @call "%~dp0\set_sln_exes.bat"
-@set DEPLOY_BINS=%SLN_EXES% 
+@set DEPLOY_BINS=%SLN_EXES%
 @if "%DEPLOY_BINS%"=="" @set DEPLOY_BINS=%SLN%
 @rem Add extra bins here
-@set DEPLOY_BINS=%DEPLOY_BINS% 
+@set DEPLOY_BINS=%DEPLOY_BINS%
 @rem
 @if "%DEPLOY_ROOT%"==""   @set DEPLOY_ROOT=%UMBA_TOOLS%
 @rem
@@ -17,6 +17,9 @@
 @call "%~dp0.bat\deploy_impl.bat"
 @rem
 @rem Add extra deploy code here
+
+@rem %SLN% --help > help.txt
+
 @if "%UMBA_TOOLS%"=="" goto DONT_REG_HANDLER
 %UMBA_TOOLS%\bin\umba-md-pp-view.exe --register-view-handler
 :DONT_REG_HANDLER
