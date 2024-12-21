@@ -16,7 +16,7 @@
 @rem
 @call "%~dp0.bat\deploy_impl.bat"
 @rem
-@rem Add extra deploy code hre
+@rem Add extra deploy code here
 @if "%UMBA_TOOLS%"=="" goto DONT_REG_HANDLER
 %UMBA_TOOLS%\bin\umba-md-pp-view.exe --register-view-handler
 :DONT_REG_HANDLER
