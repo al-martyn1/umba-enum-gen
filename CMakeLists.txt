@@ -78,6 +78,6 @@ set(COMMON_LIBS encoding::encoding marty_cpp::marty_cpp sfmt::sfmt umba::umba)
 set(COMMON_UMBA_OPTIONS "BIGOBJ" "UTF8" "WALL" "WERR")
 
 add_executable(umba-enum-gen "${SRC_ROOT}/umba-enum-gen.cpp" "${headers}")
-umba_add_target_options(umba-enum-gen "${UNDEFINED_VAR}" "BIGOBJ" "CONSOLE" "UTF8" )
+umba_add_target_options(umba-enum-gen "${UNDEFINED_VAR}" "BIGOBJ" "CONSOLE" "UTF8" "PEDANTIC" "WERROR")
 target_link_libraries(umba-enum-gen PRIVATE "${PLATFORM_LIBS}" "${COMMON_LIBS}")
 
