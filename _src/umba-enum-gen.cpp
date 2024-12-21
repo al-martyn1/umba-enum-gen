@@ -43,6 +43,9 @@
 #include "umba/time_service.h"
 #include "umba/shellapi.h"
 
+//
+#include "AppConfig.h"
+
 
 #if defined(WIN32) || defined(_WIN32)
 
@@ -56,22 +59,6 @@
 
 // #include "umba/time_service.h"
 // #include "umba/text_utils.h"
-
-struct EnumGenerationArgs
-{
-    bool         fromFile           = false;
-    std::string  valsText           ;
-    std::string  enumName           ;
-    std::string  enumComment        ;
-    std::string  underlayingType    ;
-    std::string  enumNameStyle      ;
-    std::string  valuesNameStyle    ;
-    std::string  serializedNameStyle;
-    std::string  enumElementPrefix  ;
-    unsigned     generatorOptions   ;
-    unsigned     hexNumberWidth     ;
-    unsigned     octNumberWidth     ;
-};
 
 
 
@@ -98,29 +85,7 @@ std::string templateName;
 
 std::string outputFilename;
 
-std::unordered_set<std::string>   unsignedTypes;
-
-using marty_cpp::ELinefeedType;
-ELinefeedType                     outputLinefeed         = ELinefeedType::detect;
-
-std::string                       enumName;
-std::string                       enumComment;
-std::string                       underlayingType;
-marty_cpp::NameStyle              namespaceNameStyle  = marty_cpp::NameStyle::pascalStyle;
-marty_cpp::NameStyle              enumNameStyle       = marty_cpp::NameStyle::pascalStyle;
-marty_cpp::NameStyle              valuesNameStyle     = marty_cpp::NameStyle::pascalStyle;
-marty_cpp::NameStyle              serializedNameStyle = marty_cpp::NameStyle::pascalStyle;
-std::string                       enumElementPrefix;
-unsigned                          enumGeneratorOptions   = 0;
-
-unsigned                          hexNumberWidth      = 8;
-unsigned                          octNumberWidth      = 3;
-
-std::vector<std::string>          overrideTemplateParameters;
-
-
-std::vector<EnumGenerationArgs>   enumGenerationArgsList;
-
+AppConfig  appConfig;
 
 #include "log.h"
 
@@ -276,7 +241,7 @@ int main(int argc, char* argv[])
 
     unsigned allGenerationOptions = 0;
 
-    for(auto &genArgs : enumGenerationArgsList)
+    for(auto &genArgs : appConfig.enumGenerationArgsList)
     {
         allGenerationOptions |= genArgs.generatorOptions;
 
@@ -376,7 +341,7 @@ int main(int argc, char* argv[])
     }
 
 
-    for(auto otp : overrideTemplateParameters)
+    for(auto otp : appConfig.overrideTemplateParameters)
     {
         if (!genTpl.checkAssignParam(otp))
         {
@@ -413,19 +378,21 @@ int main(int argc, char* argv[])
     {
         auto ns = marty_cpp::makeNamespaceOutputWriteGuard( oss
                                                           , namespacesStr
-                                                          , namespaceNameStyle // marty_cpp::NameStyle::defaultStyle //TODO: !!!
+                                                          , appConfig.namespaceNameStyle // marty_cpp::NameStyle::defaultStyle //TODO: !!!
                                                           , genTpl.nsBegin
                                                           , genTpl.nsEnd
                                                           , genTpl.nsNameFormat
                                                           );
 
 
-        for(auto &genArgs : enumGenerationArgsList)
+        for(auto &genArgs : appConfig.enumGenerationArgsList)
         {
             std::vector<std::string> dups;
        
-            marty_cpp::NameStyle enumNameStyle = marty_cpp::fromString(genArgs.enumNameStyle, marty_cpp::NameStyle::invalid);
-            std::string enumName = marty_cpp::formatName( genArgs.enumName, enumNameStyle, true /* fixStartDigit */, true /* fixKeywords */ );
+            //marty_cpp::NameStyle 
+            appConfig.enumNameStyle = marty_cpp::fromString(genArgs.enumNameStyle, marty_cpp::NameStyle::invalid);
+            //std::string 
+            appConfig.enumName = marty_cpp::formatName( genArgs.enumName, appConfig.enumNameStyle, true /* fixStartDigit */, true /* fixKeywords */ );
 
             genTpl.hexWidth = genArgs.hexNumberWidth;
             genTpl.octWidth = genArgs.octNumberWidth;
@@ -477,8 +444,8 @@ int main(int argc, char* argv[])
             }
 
             unsigned generatorOptions = genArgs.generatorOptions;
-            std::unordered_set<std::string>::const_iterator uit = unsignedTypes.find(genArgs.underlayingType);
-            if (uit!=unsignedTypes.end())
+            std::unordered_set<std::string>::const_iterator uit = appConfig.unsignedTypes.find(genArgs.underlayingType);
+            if (uit!= appConfig.unsignedTypes.end())
             {
                 if (!argsParser.quet)
                 {
@@ -496,7 +463,7 @@ int main(int argc, char* argv[])
                                               , genArgs.valsText
                                               , indentStr
                                               , indentIncStr
-                                              , enumName
+                                              , appConfig.enumName
                                               , genArgs.underlayingType
                                               , genArgs.valuesNameStyle
                                               , genArgs.serializedNameStyle
@@ -517,17 +484,17 @@ int main(int argc, char* argv[])
 
     }
 
-    if (outputLinefeed==ELinefeedType::unknown || outputLinefeed==ELinefeedType::detect)
+    if (appConfig.outputLinefeed==marty_cpp::ELinefeedType::unknown || appConfig.outputLinefeed==marty_cpp::ELinefeedType::detect)
     {
         #if defined(WIN32) || defined(_WIN32)
-            outputLinefeed = ELinefeedType::crlf;
+            appConfig.outputLinefeed = marty_cpp::ELinefeedType::crlf;
         #else
-            outputLinefeed = ELinefeedType::lf;
+            appConfig.outputLinefeed = marty_cpp::ELinefeedType::lf;
         #endif
     }
 
 
-    std::string resultText = marty_cpp::converLfToOutputFormat(oss.str(), outputLinefeed);
+    std::string resultText = marty_cpp::converLfToOutputFormat(oss.str(), appConfig.outputLinefeed);
 
     try
     {

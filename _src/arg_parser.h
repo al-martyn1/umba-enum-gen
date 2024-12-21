@@ -48,6 +48,8 @@ int operator()( const std::string                               &a           //!
 {
     //using namespace marty::clang::helpers;
 
+    UMBA_USED(fBuiltin);
+
     std::string dppof = "Don't parse predefined options from ";
 
     if (opt.isOption())
@@ -58,6 +60,8 @@ int operator()( const std::string                               &a           //!
         //unsigned uintVal;
         std::size_t szVal;
         bool boolVal;
+
+        UMBA_USED(intVal);
 
         if (opt.name.empty())
         {
@@ -268,7 +272,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
          
-            hexNumberWidth = (unsigned)szVal;
+            appConfig.hexNumberWidth = (unsigned)szVal;
          
             return 0;
         }
@@ -285,7 +289,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
          
-            octNumberWidth = (unsigned)szVal;
+            appConfig.octNumberWidth = (unsigned)szVal;
          
             return 0;
         }
@@ -320,14 +324,14 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
             
-            ELinefeedType tmp = marty_cpp::enum_deserialize( strVal, ELinefeedType::invalid );
-            if (tmp==ELinefeedType::invalid)
+            marty_cpp::ELinefeedType tmp = marty_cpp::enum_deserialize( strVal, marty_cpp::ELinefeedType::invalid );
+            if (tmp==marty_cpp::ELinefeedType::invalid)
             {
                 LOG_ERR_OPT<<"Invalid linefeed option value: "<<strVal<<"\n";
                 return -1;
             }
 
-            outputLinefeed = tmp;
+            appConfig.outputLinefeed = tmp;
 
             return 0;
         }
@@ -376,7 +380,7 @@ int operator()( const std::string                               &a           //!
 
             if (strVal=="0")
             {
-                enumGeneratorOptions = 0;
+                appConfig.enumGeneratorOptions = 0;
                 return 0;
             }
             
@@ -398,7 +402,7 @@ int operator()( const std::string                               &a           //!
 
             unsigned utmp = (unsigned)tmp;
 
-            enumGeneratorOptions |= utmp;
+            appConfig.enumGeneratorOptions |= utmp;
 
             return 0;
         }
@@ -449,12 +453,28 @@ int operator()( const std::string                               &a           //!
                     if (strVal=="DefaultStyle")
                         break;
 
+                case marty_cpp::NameStyle::all                               : [[fallthrough]];
+                case marty_cpp::NameStyle::end                               : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenStyle                       : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::cppUnderscoredStyle               : [[fallthrough]];
+                case marty_cpp::NameStyle::camelUnderscoredStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::pascalUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedUnderscoredStyle  : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedUnderscoredStyle : [[fallthrough]];
+                case marty_cpp::NameStyle::cppCamelMixedUnderscoredStyle     : [[fallthrough]];
+                case marty_cpp::NameStyle::cppPascalMixedUnderscoredStyle    : [[fallthrough]];
+                case marty_cpp::NameStyle::defineUnderscoredStyle            : [[fallthrough]];
+                // case marty_cpp::NameStyle::: [[fallthrough]];
+
                 default:
                     LOG_ERR_OPT << "Invalid enum name style value: '" << strVal << "' (--namespace-name-style)\n"; // , --options\n"
                     return -1;
             };
 
-            namespaceNameStyle = nameStyle;
+            appConfig.namespaceNameStyle = nameStyle;
             return 0;
         }
 
@@ -504,12 +524,28 @@ int operator()( const std::string                               &a           //!
                     if (strVal=="DefaultStyle")
                         break;
 
+                case marty_cpp::NameStyle::all                               : [[fallthrough]];
+                case marty_cpp::NameStyle::end                               : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenStyle                       : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::cppUnderscoredStyle               : [[fallthrough]];
+                case marty_cpp::NameStyle::camelUnderscoredStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::pascalUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedUnderscoredStyle  : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedUnderscoredStyle : [[fallthrough]];
+                case marty_cpp::NameStyle::cppCamelMixedUnderscoredStyle     : [[fallthrough]];
+                case marty_cpp::NameStyle::cppPascalMixedUnderscoredStyle    : [[fallthrough]];
+                case marty_cpp::NameStyle::defineUnderscoredStyle            : [[fallthrough]];
+                // case marty_cpp::NameStyle::: [[fallthrough]];
+
                 default:
                     LOG_ERR_OPT << "Invalid enum name style value: '" << strVal << "' (--enum-name-style)\n"; // , --options\n"
                     return -1;
             };
 
-            enumNameStyle = nameStyle;
+            appConfig.enumNameStyle = nameStyle;
             return 0;
         }
 
@@ -559,12 +595,28 @@ int operator()( const std::string                               &a           //!
                     if (strVal=="DefaultStyle")
                         break;
 
+                case marty_cpp::NameStyle::all                               : [[fallthrough]];
+                case marty_cpp::NameStyle::end                               : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenStyle                       : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::cppUnderscoredStyle               : [[fallthrough]];
+                case marty_cpp::NameStyle::camelUnderscoredStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::pascalUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedUnderscoredStyle  : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedUnderscoredStyle : [[fallthrough]];
+                case marty_cpp::NameStyle::cppCamelMixedUnderscoredStyle     : [[fallthrough]];
+                case marty_cpp::NameStyle::cppPascalMixedUnderscoredStyle    : [[fallthrough]];
+                case marty_cpp::NameStyle::defineUnderscoredStyle            : [[fallthrough]];
+                // case marty_cpp::NameStyle::: [[fallthrough]];
+
                 default:
                     LOG_ERR_OPT << "Invalid enum values style value: '" << strVal << "' (--enum-values-style)\n"; // , --options\n"
                     return -1;
             };
 
-            valuesNameStyle = nameStyle;
+            appConfig.valuesNameStyle = nameStyle;
             return 0;
         }
 
@@ -616,12 +668,27 @@ int operator()( const std::string                               &a           //!
                     if (strVal=="DefaultStyle")
                     break;
 
+                case marty_cpp::NameStyle::end                               : [[fallthrough]];
+                // case marty_cpp::NameStyle::hyphenStyle                       : [[fallthrough]];
+                // case marty_cpp::NameStyle::hyphenCamelMixedStyle             : [[fallthrough]];
+                // case marty_cpp::NameStyle::hyphenPascalMixedStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::cppUnderscoredStyle               : [[fallthrough]];
+                case marty_cpp::NameStyle::camelUnderscoredStyle             : [[fallthrough]];
+                case marty_cpp::NameStyle::pascalUnderscoredStyle            : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenCamelMixedUnderscoredStyle  : [[fallthrough]];
+                case marty_cpp::NameStyle::hyphenPascalMixedUnderscoredStyle : [[fallthrough]];
+                case marty_cpp::NameStyle::cppCamelMixedUnderscoredStyle     : [[fallthrough]];
+                case marty_cpp::NameStyle::cppPascalMixedUnderscoredStyle    : [[fallthrough]];
+                case marty_cpp::NameStyle::defineUnderscoredStyle            : [[fallthrough]];
+                // case marty_cpp::NameStyle::: [[fallthrough]];
+
                 default:
                     LOG_ERR_OPT << "Invalid enum serialize/deserialize names style value: '" << strVal << "' (--enum-serialize-style)\n"; // , --options\n"
                     return -1;
             };
 
-            serializedNameStyle = nameStyle;
+            appConfig.serializedNameStyle = nameStyle;
             return 0;
         }
 
@@ -641,7 +708,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            unsignedTypes.insert(strVal);
+            appConfig.unsignedTypes.insert(strVal);
 
             return 0;
         }
@@ -661,15 +728,15 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            underlayingType = strVal;
+            std::string underlayingType = strVal;
 
-            if (unsignedTypes.find(underlayingType)!=unsignedTypes.end())
+            if (appConfig.unsignedTypes.find(underlayingType)!= appConfig.unsignedTypes.end())
             {
-                enumGeneratorOptions |= marty_cpp::EnumGeneratorOptionFlags::unsignedVals;
+                appConfig.enumGeneratorOptions |= marty_cpp::EnumGeneratorOptionFlags::unsignedVals;
             }
             else
             {
-                enumGeneratorOptions &= ~(marty_cpp::EnumGeneratorOptionFlags::unsignedVals);
+                appConfig.enumGeneratorOptions &= ~(marty_cpp::EnumGeneratorOptionFlags::unsignedVals);
             }
 
             return 0;
@@ -710,7 +777,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            enumElementPrefix = strVal;
+            appConfig.enumElementPrefix = strVal;
 
             return 0;
         }
@@ -770,7 +837,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            overrideTemplateParameters.emplace_back(strVal);
+            appConfig.overrideTemplateParameters.emplace_back(strVal);
 
             return 0;
         }
@@ -790,7 +857,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            enumName = strVal;
+            appConfig.enumName = strVal;
 
             return 0;
         }
@@ -811,7 +878,7 @@ int operator()( const std::string                               &a           //!
                 //return -1;
             }
 
-            enumComment = strVal;
+            appConfig.enumComment = strVal;
 
             return 0;
         }
@@ -839,7 +906,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            if (enumName.empty())
+            if (appConfig.enumName.empty())
             {
                 LOG_ERR_OPT<<"enum name not taken. Use '--enum-name' option"<<"\n";
                 return -1;
@@ -858,22 +925,22 @@ int operator()( const std::string                               &a           //!
             }
 
             args.valsText            = strVal;
-            args.enumName            = enumName;
-            args.enumComment         = enumComment;
-            args.underlayingType     = underlayingType;
-            args.enumNameStyle       = marty_cpp::toString<std::string>(enumNameStyle);
-            args.valuesNameStyle     = marty_cpp::toString<std::string>(valuesNameStyle);
-            args.serializedNameStyle = marty_cpp::toString<std::string>(serializedNameStyle);
-            args.enumElementPrefix   = enumElementPrefix;
-            args.generatorOptions    = enumGeneratorOptions;
-            args.hexNumberWidth      = hexNumberWidth;
-            args.octNumberWidth      = octNumberWidth;
+            args.enumName            = appConfig.enumName;
+            args.enumComment         = appConfig.enumComment;
+            args.underlayingType     = appConfig.underlayingType;
+            args.enumNameStyle       = marty_cpp::toString<std::string>(appConfig.enumNameStyle);
+            args.valuesNameStyle     = marty_cpp::toString<std::string>(appConfig.valuesNameStyle);
+            args.serializedNameStyle = marty_cpp::toString<std::string>(appConfig.serializedNameStyle);
+            args.enumElementPrefix   = appConfig.enumElementPrefix;
+            args.generatorOptions    = appConfig.enumGeneratorOptions;
+            args.hexNumberWidth      = appConfig.hexNumberWidth;
+            args.octNumberWidth      = appConfig.octNumberWidth;
 
-            enumGenerationArgsList.push_back(args);
+            appConfig.enumGenerationArgsList.push_back(args);
 
-            enumName.clear();
-            enumComment.clear();
-            enumElementPrefix.clear();
+            appConfig.enumName.clear();
+            appConfig.enumComment.clear();
+            appConfig.enumElementPrefix.clear();
 
             return 0;
         }
