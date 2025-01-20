@@ -1,0 +1,184 @@
+
+**-q**,
+**--quet** - Operate quetly.
+
+**--home** - Open homepage.
+
+**--no-builtin-options** - Don't parse predefined options from main distribution options file 'F:/_github/umba-tools/umba-enum-gen/conf/umba-enum-gen.options'.
+
+**--no-custom-builtin-options** - Don't parse predefined options from custom global options file 'F:/_github/umba-tools/umba-enum-gen/conf/umba-enum-gen.custom.options'.
+
+**--no-user-builtin-options** - Don't parse predefined options from user local options file 'C:/Users/martinov/.umba-enum-gen.options'.
+
+**-v**,
+**--version** - Show version info.
+
+**--where** - Show where the executable file is.
+
+**--color=CLR** - Force set console output coloring.
+Allowed values: `file`/`no`/`none`, `ansi`/`term` or `cmd`/`console`/`win`/`win32`/`windows`, initial value: `<AUTO>`.
+
+**-Y[=MODE]**,
+**--overwrite[=MODE]** - Allow overwrite existing file.
+Flag option, allowed values: `+`/`1`/`Y(es)`/`T(rue)` or /`-`/`0`/`N(o)`/`F(alse)`, default value: `TRUE`.
+
+**-P[=MODE]**,
+**--prolog[=MODE]** - Enabling/disabling generation of prolog/epilog. Prolog also contain includes. Prolog/epilog used for generate files with enums, not a standalone enums.
+Flag option, allowed values: `+`/`1`/`Y(es)`/`T(rue)` or /`-`/`0`/`N(o)`/`F(alse)`, default value: `TRUE`.
+
+**-i[=MODE]**,
+**--includes[=MODE]** - Enabling/disabling generation of includes even if prolog is enabled.
+Flag option, allowed values: `+`/`1`/`Y(es)`/`T(rue)` or /`-`/`0`/`N(o)`/`F(alse)`, default value: `TRUE`.
+
+**-B=N**,
+**--indent=N**,
+**--base-indent=N** - Set base indent size.
+Min value: `0`, max value: `128`.
+
+**-H=N**,
+**--hex-width=N**,
+**--hex-number-width=N** - Set number width for hex format.
+Min value: `0`, max value: `32`.
+
+**-8=N**,
+**--oct-width=N**,
+**--oct-number-width=N** - Set number width for oct format.
+Min value: `0`, max value: `32`.
+
+**-C=N**,
+**--indent-inc=N**,
+**--indent-increment=N** - Set indent increment size - cur indent is base-indent+LEVEL*indent-inc.
+Min value: `0`, max value: `16`.
+
+**-L=LINEFEED**,
+**--LF=LINEFEED**,
+**--linefeed=LINEFEED** - Output linefeed. LINEFEED is one of: CR/LF/CRLF/LFCR/DETECT.
+
+**-f=OPTFLAGS**,
+**--flags=OPTFLAGS**,
+**--options=OPTFLAGS**,
+**--enum-flags=OPTFLAGS**,
+**--enum-generation-flags=OPTFLAGS** - Enum generation flags/options. Flags. Can be combined with ',', '+' or '|'. Can be taken multiple times and will be ORed with previous value
+Can be a combination of next values:
+0 - reset previously defined flags
+type-decl - generate enum type declaration
+enum-class - generate enum class instead of unscoped enum
+flags - generate flags with bitwise operators defined
+serialize - generate serialization
+deserialize - generate deserialization
+serialize-both - serialize|deserialize
+serialize-set - serialization from set or from flag bits
+deserialize-set - deserialization to set or to flag bits from ORed combination of vals
+extra - generate extra (de)serialization - to/from enum set, or combination of flags - serializeSet|deserializeSet
+all - typeDecl|serialize|deserialize|serializeSet|deserializeSet
+integers - allow to deserialize from integer values (decimal)
+unsigned-vals - underlaying type is unsigned
+umap - use unordered_map/set to hold strings instead of map/set
+lowercase - deserialize trough lowercase (case independed deserialization)
+single-name - use only one (first) name for deserialization, don't allow multiple aliases
+no-comments - disable comments for enum entries
+no-extra-linefeed - don't add extra linefeeds between sections (in addition to template)
+fmt-auto - enum values auto format (depending on it's definition)
+fmt-oct - force format enum value numbers as octal
+fmt-dec - force format enum value numbers as decimal
+fmt-hex - force format enum value numbers as hexadecimal
+sys - system includes before user.
+
+**--ns-style=STYLE**,
+**--ns-name-style=STYLE**,
+**--namespace-style=STYLE**,
+**--namespace-name-style=STYLE** - Namespace name style. Can be one of (default is PascalStyle):
+DefaultStyle - use name as is
+CppStyle - lowercase name parts separated by underscore
+CamelStyle - first name part is in lowercase, next ones - PascalStyle
+PascalStyle - all name parts starts with uppercas letter
+CppCamelMixedStyle - name parts separated by underscore, first is in lowercase, next ones - PascalStyleCppPascalMixedStyle - all PascalStyle name parts separated by underscore
+DefineStyle - uppercase name parts separated by underscore.
+
+**-M=STYLE**,
+**--enum-style=STYLE**,
+**--enum-name-style=STYLE** - Enum name style. Can be one of (default is PascalStyle):
+DefaultStyle - use name as is
+CppStyle - lowercase name parts separated by underscore
+CamelStyle - first name part is in lowercase, next ones - PascalStyle
+PascalStyle - all name parts starts with uppercas letter
+CppCamelMixedStyle - name parts separated by underscore, first is in lowercase, next ones - PascalStyleCppPascalMixedStyle - all PascalStyle name parts separated by underscore
+DefineStyle - uppercase name parts separated by underscore.
+
+**-V=STYLE**,
+**--values-style=STYLE**,
+**--enum-values-style=STYLE** - Enum values style. Can be one of (default is PascalStyle):
+DefaultStyle - use name as is
+CppStyle - lowercase name parts separated by underscore
+CamelStyle - first name part is in lowercase, next ones - PascalStyle
+PascalStyle - all name parts starts with uppercas letter
+CppCamelMixedStyle - name parts separated by underscore, first is in lowercase, next ones - PascalStyleCppPascalMixedStyle - all PascalStyle name parts separated by underscore
+DefineStyle - uppercase name parts separated by underscore.
+
+**-S=STYLE**,
+**--serialize-style=STYLE**,
+**--enum-serialize-style=STYLE** - Enum serialize/deserialize names style.
+Can be one of (default is PascalStyle):
+All - generate all style names for deserialization. If this serialize value name style taken, PascalStyle names used to serialize value
+DefaultStyle - use name as is
+HyphenStyle - lowercase name parts separated by hyphen
+HyphenCamelMixedStyle - name parts separated by hyphen, first is in lowercase, next ones - PascalStyle
+HyphenPascalMixedStyle - name parts separated by hyphen, all part in PascalStyle
+CppStyle - lowercase name parts separated by underscore
+CamelStyle - first name part is in lowercase, next ones - PascalStyle
+PascalStyle - all name parts starts with uppercas letter
+CppCamelMixedStyle - name parts separated by underscore, first is in lowercase, next ones - PascalStyleCppPascalMixedStyle - all PascalStyle name parts separated by underscore
+DefineStyle - uppercase name parts separated by underscore.
+
+**-U=TYPENAME**,
+**--unsigned-type=TYPENAME** - Add type signature for unsigned type for unsigned types autodetection
+Example: --unsigned-type=std::uint32_t - after that std::uint32_t detected as unsigned if that used as underlaying type.
+
+**-D=TYPENAME**,
+**--underlaying=TYPENAME**,
+**--underlaying-type=TYPENAME** - Set underlaying type for enum.
+
+**-N=NS**,
+**--namespace=NS** - Set namespace(s) name(s) in form outer_ns::inner1::inner2 or outer_ns/inner1/inner2.
+
+**-X=PREFIX**,
+**--prefix=PREFIX**,
+**--element-prefix=PREFIX** - Set prefix for enum element names. Not used in style formatting, added as is.
+
+**-G=LANG**,
+**--lang=LANG**,
+**--language=LANG**,
+**--target-lang=LANG**,
+**--target-language=LANG** - Set target language for enum generation.
+
+**-T=NAME**,
+**--template=NAME** - Specify template name for enum generation. If not taken, 'default' template name will be used.
+
+**--OTP=NAME:VALUE**,
+**--override-template-parameter=NAME:VALUE** - Override template parameter.
+
+**-E=NAME**,
+**--enum=NAME**,
+**--enum-name=NAME** - Specify enum name for generation.
+
+**-m=NAME**,
+**--comment=NAME**,
+**--enum-comment=NAME** - Specify enum name for generation.
+You can also use string starting with the '//', like '// Some enum description' as first line/item of the enum definition, but this option overrides enum description comment.
+
+**-F=ENUMDEF**,
+**--definition=ENUMDEF**,
+**--enum-definition=ENUMDEF** - Specify enum definition. Use '@' at first position to specify definition file instead of immediate definition (-F=@EnumDefFile.txt)
+When this option encountered, enum parameters are stored in queue, and --enum-name, --enum-comment, --element-prefix values are cleared
+Enum generation flags (--enum-generation-flags) will be inherited for the next enum definition. To reset enum generation flags use '--enum-generation-flags=0'
+All other parameters are inherited by the next enum defs and must be overridden explicitly
+Format of enum definition:
+[// Enum description;] NAME[,ALIASES...] [(=|:)VALUE] [// Enum item comment]; [MORE_ITEM_DEFINITIONS...]
+When enum definition file is used (with leading '@') the good idea place each item definition on a separate line, line break and ';' symbol means the same
+Restrictions is in that you can't use ';', ':', '=' symbols in comment part
+VALUE, if taken, can references to previously defined names. That names will be formatted properly. Mixed expressions of a names and constants are also allowed.
+
+**--autocomplete-install** - Install autocompletion to bash/clink(cmd).
+
+**--autocomplete-uninstall** - Remove autocompletion from bash/clink(cmd).
+
