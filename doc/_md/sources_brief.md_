@@ -1,0 +1,255 @@
+---
+Title: Brief Description for Project Sources
+Generator: Umba Brief Scanner
+---
+ - **_libs/marty_cpp/examples/01_normalization_and_tabs.cpp** - Тестируем cEscapeString, нормализацию CR LF, нормализацию trailing spaces, condenseSpacesToTabs, normalizeIndents
+ - **_libs/marty_cpp/examples/02_enum_generator.cpp** - Тестирование генератора enum'ов marty_cpp::enum_generate_
+ - **_libs/marty_cpp/examples/03_sort_includes.cpp** - Тестируем sort_includes.
+ - **_libs/umba/CMakeCCompilerId.c** - 
+ - **_libs/umba/CMakeCXXCompilerId.cpp** - 
+ - **_libs/umba/app_main.h** - 
+ - **_libs/umba/compiler_id_cpp.h** - 
+ - **_libs/umba/internal/winstrerrorname.cxx** - 
+ - **_src/umba-enum-gen.cpp** - Утилита umba-tabtool - нормализация табов
+
+ - **_libs/encoding/compact_enc_det/compact_enc_det.cc** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det.h** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det_fuzz_test.cc** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det_generated_tables.h** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det_generated_tables2.h** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det_hint_code.cc** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det_hint_code.h** - 
+ - **_libs/encoding/compact_enc_det/compact_enc_det_unittest.cc** - 
+ - **_libs/encoding/compact_enc_det/detail_head_string.inc** - 
+ - **_libs/encoding/disable_warnings_begin.h** - 
+ - **_libs/encoding/disable_warnings_end.h** - 
+ - **_libs/encoding/encoding.cpp** - 
+ - **_libs/encoding/encoding.h** - 
+ - **_libs/encoding/util/basictypes.h** - 
+ - **_libs/encoding/util/case_insensitive_hash.h** - 
+ - **_libs/encoding/util/commandlineflags.h** - 
+ - **_libs/encoding/util/encodings/encodings.cc** - 
+ - **_libs/encoding/util/encodings/encodings.h** - 
+ - **_libs/encoding/util/encodings/encodings.pb.h** - 
+ - **_libs/encoding/util/encodings/encodings_unittest.cc** - 
+ - **_libs/encoding/util/languages/languages.cc** - 
+ - **_libs/encoding/util/languages/languages.h** - 
+ - **_libs/encoding/util/languages/languages.pb.h** - 
+ - **_libs/encoding/util/logging.h** - 
+ - **_libs/encoding/util/port.h** - 
+ - **_libs/encoding/util/string_util.h** - 
+ - **_libs/encoding/util/varsetter.h** - 
+ - **_libs/marty_cpp/c_escape.h** - C/C++ string escapement, simplified version (\o,\x,\u,\N not supported)
+ - **_libs/marty_cpp/enums-old.h** - 
+ - **_libs/marty_cpp/enums.h** - 
+ - **_libs/marty_cpp/examples/enum_gen_cpp_templates_txt.c** - 
+ - **_libs/marty_cpp/marty_cpp.h** - C++ (also good for other langs) identifiers style autodetect and format
+ - **_libs/marty_cpp/marty_cpp_exceptions.h** - 
+ - **_libs/marty_cpp/marty_enum.h** - Helpers for enum
+ - **_libs/marty_cpp/marty_enum_impl_helpers.h** - 
+ - **_libs/marty_cpp/marty_flag_ops.h** - 
+ - **_libs/marty_cpp/marty_flags.h** - Helpers for flags
+ - **_libs/marty_cpp/marty_ns.h** - Helpers for namespace
+ - **_libs/marty_cpp/marty_ss.h** - Simple stream template
+ - **_libs/marty_cpp/sort_includes.h** - 
+ - **_libs/marty_cpp/src_normalization.h** - Simple strings normalization - LF normalization, Tab normalization, split to lines
+ - **_libs/marty_cpp/warnings/disable_C5045.h** - 
+ - **_libs/marty_cpp/warnings/disable_spectre_mitigation.h** - 
+ - **_libs/marty_cpp/warnings/pop.h** - 
+ - **_libs/marty_cpp/warnings/push.h** - 
+ - **_libs/marty_cpp/warnings/push_disable_spectre_mitigation.h** - 
+ - **_libs/sfmt/simple_formatter.cpp** - 
+ - **_libs/sfmt/umba_lout.cpp** - Реализация глобального объекта потока LOG вывода umba::lout
+ - **_libs/umba/algoritms.h** - Различные колхозные алгоритмы
+ - **_libs/umba/alloca.h** - Совместимая версия alloca/_alloca
+ - **_libs/umba/arithmetic_strong_typedef.h** - Какая-то шляпа, уже и не помню. Вроде оставлена чисто для совместимости
+ - **_libs/umba/assert.h** - Универсальная реализация UMBA_ASSERT
+ - **_libs/umba/attribute_weak.h** - 
+ - **_libs/umba/autolock.h** - Автоматический захват и освобождение ресурса. Объект-ресурс должен предоставлять методы lock и unlock.
+ - **_libs/umba/basic_interfaces.h** - Базовые интерфейсы
+ - **_libs/umba/basic_interfaces_impl.h** - Реализация некоторых базовых интерфейсов
+ - **_libs/umba/bits.h** - Манипуляции с битами
+ - **_libs/umba/bits_fmt.h** - Вывод битсетов в поток
+ - **_libs/umba/char_writers.h** - Реализации интерфейса ICharWritter для различных целевых шляп типа COM-порта или файла
+ - **_libs/umba/cli_tool_helpers.h** - Хелперы для утилит командной строки (CLI)
+ - **_libs/umba/clipboard_win32.h** - Хелперы для виндового клипборда
+ - **_libs/umba/cmd_line.h** - Разная шляпа по разбору командной строки для консольных утилит
+ - **_libs/umba/compiler_info.cpp** - 
+ - **_libs/umba/compiler_info.h** - 
+ - **_libs/umba/const_string.h** - Константные строки - обёртка для строковых литералов (экспериментальная фуета)
+ - **_libs/umba/container.h** - Тут разные странные контейнеры, как самописные, так и стыренные
+ - **_libs/umba/container_utility.h** - 
+ - **_libs/umba/critical_section.cpp** - Реализация критической секции
+ - **_libs/umba/critical_section.h** - Реализация критической секции.
+ - **_libs/umba/debug_helpers.h** - Поддержка отладки
+ - **_libs/umba/dump.h** - Хелперы для дампа
+ - **_libs/umba/enum_helpers.h** - Хелперы для enum'ов
+ - **_libs/umba/env.h** - Работа с переменными окружения
+ - **_libs/umba/errors.h** - Ошибки, и связанные с ними определения
+ - **_libs/umba/escape_string.h** - 
+ - **_libs/umba/exception.h** - Umba-исключения
+ - **_libs/umba/file_helpers.h** - Файловые хелперы. Они разъехались по разным местам. А хидер остался для совместимости
+ - **_libs/umba/filecache.h** - Файловый кеш (эксперименты)
+ - **_libs/umba/filename.h** - Утилиты для работы с именами файлов
+ - **_libs/umba/filename_set.h** - Отображение имен файлов в id и обратно
+ - **_libs/umba/filesys.h** - Прослойка абстракций для работы с файловой системой, версия, работающая одинаково с любыми типами имён (char/wchar_t)
+ - **_libs/umba/filesys_scanners.h** - Разные сканеры имен. По маскам и не только.
+ - **_libs/umba/flag_helpers.h** - Какие-то хелперы для enum флагов. Выпочковалось в итоге в часть marty_cpp
+ - **_libs/umba/format_message.h** - Форматирование сообщений при помощи макросов $(Macro)
+ - **_libs/umba/format_utils.h** - Утилиты для форматирования
+ - **_libs/umba/gmesg.h** - 
+ - **_libs/umba/hr_counter.h** - Подсистема hr_counter - счетчики высокого разрешения
+ - **_libs/umba/html_base.h** - 
+ - **_libs/umba/i_char_writer.h** - Интерфейс для использования в форматном выводе
+ - **_libs/umba/id_gen.h** - 
+ - **_libs/umba/include_finder.h** - Поиск подключаемых файлов
+ - **_libs/umba/info_log.h** - Хелперы для лога
+ - **_libs/umba/ini.h** - Разбор INI-файла
+ - **_libs/umba/interface.h** - Базовые определения для интерфейсов, и связанные с ним определения
+ - **_libs/umba/internal/env.h** - Работа с переменными окружения
+ - **_libs/umba/internal/filesys.h** - Прослойка абстракций для работы с файловой системой
+ - **_libs/umba/internal/filesys_impl_helpers.h** - 
+ - **_libs/umba/internal/winerror_org.h** - 
+ - **_libs/umba/internal/winerror_prepared.h** - 
+ - **_libs/umba/internal/winstrerrorname.h** - 
+ - **_libs/umba/iterator.h** - 
+ - **_libs/umba/legacy.h** - Подключение классических хидеров скопом
+ - **_libs/umba/linefeedtype.h** - Объявление типа перевода строки и разные хелперы
+ - **_libs/umba/lineinfo.h** - LineInfo и сопутствующее. Устаревшая (непосредственно содержащая строку) версия API
+ - **_libs/umba/lineposinfo.h** - Типы для указания положения в текстовом файле
+ - **_libs/umba/lineview.h** - Структура LineView и соответствующие функции
+ - **_libs/umba/log.h** - Вывод в лог (на консоль), хелперы
+ - **_libs/umba/macro_helpers.h** - Макросики-матросики. У макросов нет вопросов. Хелперы
+ - **_libs/umba/macros.h** - Макросики-матросики. У макросов нет вопросов. Адаптация старенького кода для подстановки макросов. Осторожно! Может вызывать кровотечение из глаз
+ - **_libs/umba/name_version.h** - Работа с именоваными номерами версий
+ - **_libs/umba/nul_ostream.h** - Пустопорожний Ostream, никуда ничего не выводит
+ - **_libs/umba/null_inserter.h** - Ничего не делающий insert_iterator
+ - **_libs/umba/numeric_version.h** - Работа с номерами версий
+ - **_libs/umba/optimize_pop.h** - Восстанавливает предыдущий уровень оптимизации
+ - **_libs/umba/optimize_speed.h** - Включает режим оптимизации по скорости
+ - **_libs/umba/packpop.h** - Восстановление значения по умолчанию для упаковки структур
+ - **_libs/umba/parse_utils.h** - Утилиты для парсинга
+ - **_libs/umba/perf_counters.h** - Подсистема perf_counters - счетчики производительности
+ - **_libs/umba/preprocessor.h** - Различные общие макросы препроцессора
+ - **_libs/umba/program_location.h** - Поиск месторасположения self EXE-шника
+ - **_libs/umba/properties.h** - Реализация properties на чистом C++
+ - **_libs/umba/pushpack1.h** - Сохранение текущих настроек и установка упаковки структур по 1
+ - **_libs/umba/pushpack2.h** - Сохранение текущих настроек и установка упаковки структур по 2
+ - **_libs/umba/pushpack4.h** - Сохранение текущих настроек и установка упаковки структур по 4
+ - **_libs/umba/pushpack8.h** - Сохранение текущих настроек и установка упаковки структур по 8
+ - **_libs/umba/qtui-show-simple-message.h** - Qt-хелпер для отображения MessageBox
+ - **_libs/umba/regex_helpers.h** - Помощяки для плюсовых регулярок. В тч (простая_маска_*_?) -> ECMA Regex
+ - **_libs/umba/relops.h** - 
+ - **_libs/umba/rgbquad.h** - Реализация RGB четвертяка. Хранит RGB и Alpha-канал компоненты цвета
+ - **_libs/umba/rule_of_five.h** - Макросы для правила пяти - надоело руками выписывать. Правило пяти - https://habr.com/ru/companies/otus/articles/800089/
+ - **_libs/umba/scanners.h** - 
+ - **_libs/umba/scope_exec.h** - Выполнение лямбд при объявлении переменной и при выходе из скоупа
+ - **_libs/umba/shellapi.h** - 
+ - **_libs/umba/stl.h** - Совместимое со всеми компиляторами подключение стандартных заголовков
+ - **_libs/umba/stl_keil.h** - Некоторые фичи C++11, которые не реализованы библиотеке компилятора Keil
+ - **_libs/umba/stl_keil_initializer_list.h** - 
+ - **_libs/umba/stl_keil_type_traits.h** - Перетащенное под старый Кейл type_traits из GCC
+ - **_libs/umba/string_char_writers.h** - 
+ - **_libs/umba/string_plus.h** - Разная всячина для строк в C++ стиле
+ - **_libs/umba/text_iterator_traits.h** - 
+ - **_libs/umba/text_position_info.h** - 
+ - **_libs/umba/text_utils.h** - Шляпы с текстом
+ - **_libs/umba/the.h** - 
+ - **_libs/umba/the_.h** - 
+ - **_libs/umba/time_service.cpp** - На базе кода под STM32, адаптация для кроссплатформы, реализация
+ - **_libs/umba/time_service.h** - Подсистема time_service
+ - **_libs/umba/timestamp.h** - Представление временного интервала в сутках, часах, минутах, секундах и милисекундах
+ - **_libs/umba/transliteration.h** - 
+ - **_libs/umba/umba.h** - Подключение базовых файлов UMBA
+ - **_libs/umba/umba_cpp.h** - Разная всячина в C++ стиле
+ - **_libs/umba/undef_FormatMessage.h** - Undef'ы тупого мусора
+ - **_libs/umba/undef_min_max.h** - Undef'ы тупого мусора
+ - **_libs/umba/units.h** - 
+ - **_libs/umba/user_literals.h** - Типа пользовательские литералы
+ - **_libs/umba/utf.h** - 
+ - **_libs/umba/utf8.h** - 
+ - **_libs/umba/utf_impl.h** - 
+ - **_libs/umba/utility.h** - Утилитки в C++ стиле
+ - **_libs/umba/variadic_helpers.h** - Хелперы для вариадик-шаблонов
+ - **_libs/umba/warnings/disable_C4061.h** - 
+ - **_libs/umba/warnings/disable_C4062.h** - 
+ - **_libs/umba/warnings/disable_C4127.h** - 
+ - **_libs/umba/warnings/disable_C4191.h** - 
+ - **_libs/umba/warnings/disable_C4265.h** - 
+ - **_libs/umba/warnings/disable_C4355.h** - 
+ - **_libs/umba/warnings/disable_C4365.h** - 
+ - **_libs/umba/warnings/disable_C4464.h** - 
+ - **_libs/umba/warnings/disable_C4555.h** - 
+ - **_libs/umba/warnings/disable_C4623.h** - 
+ - **_libs/umba/warnings/disable_C4820.h** - 
+ - **_libs/umba/warnings/disable_C4840.h** - 
+ - **_libs/umba/warnings/disable_C4996.h** - 
+ - **_libs/umba/warnings/disable_C5045.h** - 
+ - **_libs/umba/warnings/disable_C5204.h** - 
+ - **_libs/umba/warnings/disable_C5267.h** - 
+ - **_libs/umba/warnings/disable_common.h** - 
+ - **_libs/umba/warnings/disable_condition_is_const.h** - 
+ - **_libs/umba/warnings/disable_def_ctor_implicitly_deleted.h** - 
+ - **_libs/umba/warnings/disable_enumerator_not_handled.h** - 
+ - **_libs/umba/warnings/disable_fn_or_var_unsafe.h** - 
+ - **_libs/umba/warnings/disable_implicit_copy_ctor_deprecated.h** - 
+ - **_libs/umba/warnings/disable_non_portable_variadic.h** - 
+ - **_libs/umba/warnings/disable_non_trivial_destructor_not_virtual.h** - 
+ - **_libs/umba/warnings/disable_padding_added.h** - 
+ - **_libs/umba/warnings/disable_rel_inc_contains_dbldot.h** - 
+ - **_libs/umba/warnings/disable_result_not_used.h** - 
+ - **_libs/umba/warnings/disable_signed_unsigned_mismatch.h** - 
+ - **_libs/umba/warnings/disable_spectre_mitigation.h** - 
+ - **_libs/umba/warnings/disable_this_used_in_base_member_initializer_list.h** - 
+ - **_libs/umba/warnings/disable_trivial_destructor_not_virtual.h** - 
+ - **_libs/umba/warnings/disable_unsafe_conversion.h** - 
+ - **_libs/umba/warnings/pop.h** - 
+ - **_libs/umba/warnings/push.h** - 
+ - **_libs/umba/warnings/push_disable_C4061.h** - 
+ - **_libs/umba/warnings/push_disable_C4062.h** - 
+ - **_libs/umba/warnings/push_disable_C4127.h** - 
+ - **_libs/umba/warnings/push_disable_C4191.h** - 
+ - **_libs/umba/warnings/push_disable_C4265.h** - 
+ - **_libs/umba/warnings/push_disable_C4355.h** - 
+ - **_libs/umba/warnings/push_disable_C4365.h** - 
+ - **_libs/umba/warnings/push_disable_C4464.h** - 
+ - **_libs/umba/warnings/push_disable_C4555.h** - 
+ - **_libs/umba/warnings/push_disable_C4623.h** - 
+ - **_libs/umba/warnings/push_disable_C4820.h** - 
+ - **_libs/umba/warnings/push_disable_C4840.h** - 
+ - **_libs/umba/warnings/push_disable_C4996.h** - 
+ - **_libs/umba/warnings/push_disable_C5045.h** - 
+ - **_libs/umba/warnings/push_disable_C5204.h** - 
+ - **_libs/umba/warnings/push_disable_C5267.h** - 
+ - **_libs/umba/warnings/push_disable_common.h** - 
+ - **_libs/umba/warnings/push_disable_condition_is_const.h** - 
+ - **_libs/umba/warnings/push_disable_def_ctor_implicitly_deleted.h** - 
+ - **_libs/umba/warnings/push_disable_enumerator_not_handled.h** - 
+ - **_libs/umba/warnings/push_disable_fn_or_var_unsafe.h** - 
+ - **_libs/umba/warnings/push_disable_implicit_copy_ctor_deprecated.h** - 
+ - **_libs/umba/warnings/push_disable_non_portable_variadic.h** - 
+ - **_libs/umba/warnings/push_disable_non_trivial_destructor_not_virtual.h** - 
+ - **_libs/umba/warnings/push_disable_padding_added.h** - 
+ - **_libs/umba/warnings/push_disable_rel_inc_contains_dbldot.h** - 
+ - **_libs/umba/warnings/push_disable_result_not_used.h** - 
+ - **_libs/umba/warnings/push_disable_signed_unsigned_mismatch.h** - 
+ - **_libs/umba/warnings/push_disable_spectre_mitigation.h** - 
+ - **_libs/umba/warnings/push_disable_this_used_in_base_member_initializer_list.h** - 
+ - **_libs/umba/warnings/push_disable_trivial_destructor_not_virtual.h** - 
+ - **_libs/umba/warnings/push_disable_unsafe_conversion.h** - 
+ - **_libs/umba/win32_utils.h** - 
+ - **_libs/umba/winconhelpers.h** - Хелперы для работы с консолью под Windows
+ - **_libs/umba/zz_detect_environment.h** - ZZ Определение сборочного окружения и целевой платформы.
+ - **_libs/umba/zz_error_codes.h** - ZZ Коды ошибок
+ - **_libs/umba/zz_i_char_writer_term.h** - ZZ Утилиты для вывода в терминал
+ - **_libs/umba/zz_i_char_writer_term_colors.h** - ZZ Цветочки для терминала
+ - **_libs/umba/zz_i_char_writer_term_console_type.h** - ZZ Дефиниции про консоль
+ - **_libs/umba/zz_i_char_writer_term_utils.h** - ZZ Какие-то консольные хелперы
+ - **_libs/umba/zz_inc_windows.h** - ZZ Правильный порядок инклюдов для винды
+ - **_libs/umba/zz_mcu_low_level.h** - ZZ Microcontroller Unit Low Level definitions
+ - **_src/AppConfig.h** - 
+ - **_src/app_ver_config.h** - 
+ - **_src/arg_parser.h** - 
+ - **_src/log.h** - 
+ - **_src/print_ver.h** - 
+ - **tmp.cpp** - 
