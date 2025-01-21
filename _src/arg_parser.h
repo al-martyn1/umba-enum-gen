@@ -1,3 +1,6 @@
+/*! \file
+    \brief Разбор аргументов командной строки
+ */
 #pragma once
 
 #include <stack>

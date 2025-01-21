@@ -1,3 +1,7 @@
+/*! \file
+    \brief Информация о приложении и его версии - название, описание, версия, время/дата, домашняя страница
+ */
+
 std::string appFullName   = "Umba Enum's Genertor";
 std::string appVersion    = "1.01";
 std::string appCommitHash;  //UNDONE

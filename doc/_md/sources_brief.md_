@@ -7,11 +7,11 @@ Generator: Umba Brief Scanner
 
 # _src
 
-- `AppConfig.h` - 
-- `app_ver_config.h` - 
-- `arg_parser.h` - 
-- `log.h` - 
-- `print_ver.h` - 
-- `umba-enum-gen.cpp` - Утилита umba-tabtool - нормализация табов
+- `AppConfig.h` - Класс конфигурации. Настраивается опциями командной строки.
+- `app_ver_config.h` - Информация о приложении и его версии - название, описание, версия, время/дата, домашняя страница
+- `arg_parser.h` - Разбор аргументов командной строки
+- `log.h` - Макросы для лога
+- `print_ver.h` - Печать версии и даты сборки
+- `umba-enum-gen.cpp` - Утилита umba-enum-gen - генератор перечислений
 
 - `tmp.cpp` - 

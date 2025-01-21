@@ -1,3 +1,6 @@
+/*! \file
+    \brief Печать версии и даты сборки
+ */
 #pragma once
 
 // https://stackoverflow.com/questions/11697820/how-to-use-date-and-time-predefined-macros-in-as-two-integers-then-stri

@@ -3,4 +3,4 @@ Title: Brief Description for Project Sources
 Generator: Umba Brief Scanner
 ---
 
-- `umba-enum-gen.cpp` - Утилита umba-tabtool - нормализация табов
+- `umba-enum-gen.cpp` - Утилита umba-enum-gen - генератор перечислений
