@@ -9,7 +9,7 @@
 
 @rem call "%~dp0\.bat\fix_tabs.bat"
 
-@set CLOCMD=md_
+@set CLOCMD=_md
 @call "%~dp0\.bat\run_clock.bat"
 
 @if exist "%~dp0.bat\gen-doc.bat" @(
