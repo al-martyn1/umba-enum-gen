@@ -1,0 +1,29 @@
+--overwrite
+--verbose=detailed
+#--verbose=normal
+#--verbose=config
+# --main
+--remove-path
+--filename-width=24
+--text-width=80
+--update
+
+# doc/_sources_brief.txt
+
+--exclude-dir=encoding
+--exclude-dir=marty_cpp
+--exclude-dir=sfmt
+--exclude-dir=umba
+#--exclude-dir=marty_decimal
+
+#--scan-notes
+# --scan-todo is same
+
+#--notes-output-path=./doc
+
+#--exclude-dir=lib
+#--exclude-dir=libs
+#--exclude-dir=_lib
+#--exclude-dir=_libs
+
+#--notes-single-output=todo

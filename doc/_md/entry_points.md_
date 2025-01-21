@@ -2,12 +2,5 @@
 Title: Brief Description for Project Sources
 Generator: Umba Brief Scanner
 ---
- - **_libs/marty_cpp/examples/01_normalization_and_tabs.cpp** - Тестируем cEscapeString, нормализацию CR LF, нормализацию trailing spaces, condenseSpacesToTabs, normalizeIndents
- - **_libs/marty_cpp/examples/02_enum_generator.cpp** - Тестирование генератора enum'ов marty_cpp::enum_generate_
- - **_libs/marty_cpp/examples/03_sort_includes.cpp** - Тестируем sort_includes.
- - **_libs/umba/CMakeCCompilerId.c** - 
- - **_libs/umba/CMakeCXXCompilerId.cpp** - 
- - **_libs/umba/app_main.h** - 
- - **_libs/umba/compiler_id_cpp.h** - 
- - **_libs/umba/internal/winstrerrorname.cxx** - 
- - **_src/umba-enum-gen.cpp** - Утилита umba-tabtool - нормализация табов
+
+- `umba-enum-gen.cpp` - Утилита umba-tabtool - нормализация табов
