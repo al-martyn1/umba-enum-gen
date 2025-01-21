@@ -452,6 +452,7 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defaultStyle:
                     if (strVal=="DefaultStyle")
                         break;
+                    [[fallthrough]];    
 
                 case marty_cpp::NameStyle::all                               : [[fallthrough]];
                 case marty_cpp::NameStyle::end                               : [[fallthrough]];
@@ -523,6 +524,7 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defaultStyle:
                     if (strVal=="DefaultStyle")
                         break;
+                    [[fallthrough]];    
 
                 case marty_cpp::NameStyle::all                               : [[fallthrough]];
                 case marty_cpp::NameStyle::end                               : [[fallthrough]];
@@ -594,6 +596,7 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defaultStyle:
                     if (strVal=="DefaultStyle")
                         break;
+                    [[fallthrough]];    
 
                 case marty_cpp::NameStyle::all                               : [[fallthrough]];
                 case marty_cpp::NameStyle::end                               : [[fallthrough]];
@@ -667,6 +670,7 @@ int operator()( const std::string                               &a           //!
                 case marty_cpp::NameStyle::defaultStyle:
                     if (strVal=="DefaultStyle")
                     break;
+                    [[fallthrough]];
 
                 case marty_cpp::NameStyle::end                               : [[fallthrough]];
                 // case marty_cpp::NameStyle::hyphenStyle                       : [[fallthrough]];
