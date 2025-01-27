@@ -735,9 +735,10 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            std::string underlayingType = strVal;
+            //std::string 
+            appConfig.underlayingType = strVal;
 
-            if (appConfig.unsignedTypes.find(underlayingType)!= appConfig.unsignedTypes.end())
+            if (appConfig.unsignedTypes.find(appConfig.underlayingType)!= appConfig.unsignedTypes.end())
             {
                 appConfig.enumGeneratorOptions |= marty_cpp::EnumGeneratorOptionFlags::unsignedVals;
             }
