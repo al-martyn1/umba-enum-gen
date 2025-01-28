@@ -1,1 +1,0 @@
-@set SLN=umba-enum-gen
