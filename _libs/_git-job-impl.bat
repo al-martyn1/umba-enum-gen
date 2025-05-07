@@ -2,6 +2,7 @@
 @call :DO_GIT_JOB %1 %~dp0\marty_cpp
 @call :DO_GIT_JOB %1 %~dp0\marty_tr
 @call :DO_GIT_JOB %1 %~dp0\marty_utf
+@call :DO_GIT_JOB %1 %~dp0\nlohmann
 @call :DO_GIT_JOB %1 %~dp0\sfmt
 @call :DO_GIT_JOB %1 %~dp0\umba
 
