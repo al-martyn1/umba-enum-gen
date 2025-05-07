@@ -39,5 +39,3 @@
 /test-util.bat
 /*.log
 /.set_msvc.bat
-/.set_sln.bat
-/.set_sln_exes.bat
