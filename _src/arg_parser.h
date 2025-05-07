@@ -9,6 +9,9 @@
 //#include "app_config.h"
 #include "umba/cmd_line.h"
 
+#include "marty_tr/marty_tr.h"
+//
+#include "utils.h"
 
 #if defined(WIN32) || defined(_WIN32)
     #include <shellapi.h>
@@ -963,6 +966,122 @@ int operator()( const std::string                               &a           //!
         // enum values prefix (actual for non-class enums)
         // lang - target lang
         // template - generator template name
+
+
+        else if ( opt.setParam("LANG",umba::command_line::OptionType::optString)
+               || opt.isOption("tr-language") || opt.isOption("tr-lang")
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Set language (natural) for enum documentation"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+
+            marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+
+            return 0;
+        }
+
+        else if ( opt.setParam("LANG",umba::command_line::OptionType::optString)
+               || opt.isOption("tr-template-language") || opt.isOption("tr-template-lang")
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Set language (natural) for enum documentation translations template"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+
+            marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+
+            return 0;
+        }
+
+        else if ( opt.setParam("TRANSLATION_JSON",umba::command_line::OptionType::optString)
+               || opt.isOption("translation") || opt.isOption("tr")
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Set translation for current enums set"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+
+            strVal = makeAbsPath(strVal);
+            std::string jsonTrData;
+            if (!umba::filesys::readFile(strVal, jsonTrData))
+            {
+                LOG_ERR_OPT<<"failed to read tranlations from '"<<strVal<<"' file (--tr)"<<"\n";
+                return 0; // return -1; // В данном случае не выходим по ошибке
+            }
+
+            try
+            {
+                std::string jsonTrDataUtf8 = autoConvertToUtf8(jsonTrData);
+                auto m = marty_tr::tr_parse_translations_data(jsonTrDataUtf8);
+                marty_tr::tr_add_custom_translations(m);
+            }
+            catch(const std::exception &e)
+            {
+                LOG_ERR_OPT<<"failed to parse tranlations file '"<<strVal<<"' (--tr): "<<e.what()<<"\n";
+                return 0; // return -1; // В данном случае не выходим по ошибке
+            }
+            catch(...)
+            {
+                LOG_ERR_OPT<<"failed to parse tranlations file '"<<strVal<<"' (--tr): "<<"unknown error"<<"\n";
+                return 0; // return -1; // В данном случае не выходим по ошибке
+            }
+
+            return 0;
+        }
+
+
+    // std::string jsonTrData;
+    // if (umba::filesys::readFile(fname, jsonTrData))
+    // {
+    //     try
+    //     {
+    //         std::string jsonTrDataUtf8 = autoConvertToUtf8(jsonTrData);
+    //         auto m = marty_tr::tr_parse_translations_data(jsonTrDataUtf8);
+    //         marty_tr::tr_add_custom_translations(m);
+    //     }
+    //     catch(const std::exception &e)
+    //     {
+    //         LOG_ERR_OPT<<fname<<": "<<e.what()<< "\n";
+    //         return false;
+    //     }
+    //     catch(...)
+    //     {
+    //         LOG_ERR_OPT<<fname<<": "<<"Unknown error"<< "\n";
+    //         return false;
+    //     }
+    // }
+    // else
+    // {
+    //     if (!allowNoTranslations)
+    //     {
+    //         LOG_ERR_OPT<<appConfig.translationsFile<<": "<<"Failed to read file"<< "\n";
+    //         return false;
+    //     }
+    // }
+
+
 
 
         else if ( opt.isOption("autocomplete-install") 

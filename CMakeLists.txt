@@ -23,13 +23,22 @@ include(${CMAKE_CURRENT_LIST_DIR}/.cmake/umba.cmake)
 # MinGW GCC 7.3 - Compiler version: 7.3.0
 # MinGW GCC 13.2 - Compiler version: 13.2.0
 
+add_compile_definitions("YAML_CPP_STATIC_DEFINE")
+add_compile_definitions("MARTY_CPP_USE_MARTY_TR")
+
 
 include_directories(${LIB_ROOT})
 
 add_subdirectory(${LIB_ROOT}/encoding)
 add_subdirectory(${LIB_ROOT}/marty_cpp)
+add_subdirectory(${LIB_ROOT}/marty_tr)
+add_subdirectory(${LIB_ROOT}/marty_utf)
+add_subdirectory(${LIB_ROOT}/marty_yaml_toml_json)
+add_subdirectory(${LIB_ROOT}/nlohmann)    # https://json.nlohmann.me/integration/cmake/#external
 add_subdirectory(${LIB_ROOT}/sfmt)
 add_subdirectory(${LIB_ROOT}/umba)
+add_subdirectory(${LIB_ROOT}/yaml-cpp)
+
 
 
 umba_configure_boost("STATIC_LIBS" "MULTITHREADED" "${STATIC_RUNTIME}")
@@ -72,7 +81,8 @@ if(WIN32) # Всё нормально, это про таргет
     list(APPEND PLATFORM_LIBS ws2_32 iphlpapi shell32)
 endif()
 
-set(COMMON_LIBS encoding::encoding marty_cpp::marty_cpp sfmt::sfmt umba::umba)
+set(COMMON_LIBS encoding::encoding marty::cpp marty::tr marty::utf marty::yaml_toml_json nlohmann_json::nlohmann_json sfmt::sfmt umba::umba yaml-cpp::yaml-cpp)
+
 
 
 set(COMMON_UMBA_OPTIONS "BIGOBJ" "UTF8" "WALL" "WERR")

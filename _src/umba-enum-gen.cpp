@@ -44,6 +44,9 @@
 #include "umba/shellapi.h"
 
 //
+#include "marty_tr/marty_tr.h"
+
+//
 #include "AppConfig.h"
 
 
@@ -155,7 +158,7 @@ int main(int argc, char* argv[])
         // argsParser.args.push_back("--enum-name=MyCoolEnum");
         // argsParser.args.push_back("--enum-definition=//Some kind of test enum;invalid:-1; begin-some=0x0; next=1; nextOne; hex=0x11; final");
 
-        argsParser.args.push_back("@" + rootPath + "_libs/marty_cpp/_generators/enums.rsp");
+        argsParser.args.push_back("@" + rootPath + "_libs/marty_cpp/_enums/enums.rsp");
         argsParser.args.push_back("--enum-flags=enum-class,type-decl,serialize,deserialize,lowercase");
         argsParser.args.push_back("-N=marty_cpp");
         argsParser.args.push_back("-E=LinefeedType");
@@ -164,7 +167,7 @@ int main(int argc, char* argv[])
         argsParser.args.push_back("--underlaying-type=std::uint32_t");
         argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:$(ENAMNAME)");
         argsParser.args.push_back("-E=EnumGeneratorOptionFlagsSerializable");
-        argsParser.args.push_back("-F=@" + rootPath + "_libs/marty_cpp/_generators/TestNumParsing.txt");
+        argsParser.args.push_back("-F=@" + rootPath + "_libs/marty_cpp/_enums/TestNumParsing.txt");
         argsParser.args.push_back(rootPath + "../enums2.h");
 
         // argsParser.args.push_back("");
@@ -224,6 +227,17 @@ int main(int argc, char* argv[])
     //     LOG_ERR_OPT << "command line arguments parsing error" << "\n";
     //     return -1;
     // }
+
+    marty_tr::tr_set_lang_tag_format(marty_tr::ELangTagFormat::langTag); // langTagNeutral/langTagNeutralAuto/langId/langIdFull/langIdX/langIdFullX
+    marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
+    marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
+
+
+        // std::string resultJson = marty_tr::tr_serialize_translations(marty_tr::tr_get_all_translations(), 2 /* indent */);
+        // umba::filesys::createDirectoryEx( umba::filename::getPath(targetName), true /* forceCreatePath */  );
+        // umba::filesys::writeFile(targetName, resultJson, appConfig.bOverwrite ); // overwrite
+
+    // pAssetsManager->loadTranslations();
 
 
     if (!argsParser.quet)
@@ -456,8 +470,57 @@ int main(int argc, char* argv[])
 
             if (!genArgs.fromFile)
             {
+                // Если не из файла, то надо заменить semicolon (';') на перевод строки
                 genArgs.valsText = marty_cpp::simple_string_replace<std::string>(genArgs.valsText, marty_cpp::make_string<std::string>(";"), marty_cpp::make_string<std::string>("\n") );
             }
+            /*
+            // Ой. Уже есть внутрях marty_cpp
+
+            else // Если из файла, то обрабатываем line continuations
+            {
+                bool prevSlash = false;
+                std::string tmpText; tmpText.reserve(genArgs.valsText.size());
+                for(auto ch: genArgs.valsText)
+                {
+                    if (prevSlash)
+                    {
+                        prevSlash = false;
+
+                        if (ch=='\n')
+                        {
+                            tmpText.append(1, ' '); // Если предыдущий символ - слэш, то перевод строки заменяем на пробел
+                        }
+                        else
+                        {
+                            // Любой символ, кроме перевода строки
+                            if (ch=='\\')
+                            {
+                                tmpText.append(1, '\\'); // Предыдущий слэш добавили, текущий - пока захолдили
+                                prevSlash = true;
+                            }
+                            else
+                            {
+                                tmpText.append(1, '\\');
+                                tmpText.append(1, ch);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (ch=='\\')
+                        {
+                            prevSlash = true;
+                        }
+                        else
+                        {
+                            tmpText.append(1, ch);
+                        }
+                    }
+                }
+
+                swap(tmpText, genArgs.valsText)
+            }
+            */
 
             marty_cpp::enum_generate_serialize( oss
                                               , genArgs.valsText
