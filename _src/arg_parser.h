@@ -956,6 +956,30 @@ int operator()( const std::string                               &a           //!
             return 0;
         }
 
+        else if ( opt.setParam("PATH",umba::command_line::OptionType::optString)
+               || opt.isOption("md-output-path")
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Set root path for enum documentation"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+
+            appConfig.mdOutputPath = makeAbsPath(strVal);
+
+            //marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+
+            return 0;
+        }
+
+        // std::string                       mdOutputPath;
+        //  
 
         // indent - base indent (num spaces)
         // indent-inc - indent increment for next levels (num spaces)
@@ -983,7 +1007,10 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+            //marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+
+            auto vec = marty_cpp::simple_string_split(strVal, marty_cpp::make_string<std::string>(",") /* , typename StringType::size_type nSplits = -1 */ );
+            appConfig.trLangs.insert(appConfig.trLangs.end(), vec.begin(), vec.end());
 
             return 0;
         }
@@ -1004,6 +1031,26 @@ int operator()( const std::string                               &a           //!
             }
 
             marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+
+            return 0;
+        }
+
+        else if ( opt.setParam("LANG",umba::command_line::OptionType::optString)
+               || opt.isOption("tr-template-output")
+               // || opt.setParam("VAL",true)
+               || opt.setDescription( "Set output file name for enum documentation translations template"
+                                    )
+                )
+        {
+            if (argsParser.hasHelpOption) return 0;
+
+            if (!opt.getParamValue(strVal,errMsg))
+            {
+                LOG_ERR_OPT<<errMsg<<"\n";
+                return -1;
+            }
+
+            appConfig.trTemplateFile = makeAbsPath(strVal);
 
             return 0;
         }

@@ -109,6 +109,11 @@ AppConfig  appConfig;
 int main(int argc, char* argv[])
 {
 
+    marty_tr::tr_set_lang_tag_format(marty_tr::ELangTagFormat::langTag); // langTagNeutral/langTagNeutralAuto/langId/langIdFull/langIdX/langIdFullX
+    marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
+    marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
+
+
     using namespace umba::omanip;
 
 
@@ -159,6 +164,8 @@ int main(int argc, char* argv[])
         // argsParser.args.push_back("--enum-definition=//Some kind of test enum;invalid:-1; begin-some=0x0; next=1; nextOne; hex=0x11; final");
 
         argsParser.args.push_back("@" + rootPath + "_libs/marty_cpp/_enums/enums.rsp");
+        argsParser.args.push_back("--tr-template-output=" + rootPath + "_libs/marty_cpp/_enums/tpl-tmp.tr.json");
+        argsParser.args.push_back("--md-output-path=" + rootPath + "tests/generated_md");
         argsParser.args.push_back("--enum-flags=enum-class,type-decl,serialize,deserialize,lowercase");
         argsParser.args.push_back("-N=marty_cpp");
         argsParser.args.push_back("-E=LinefeedType");
@@ -167,7 +174,8 @@ int main(int argc, char* argv[])
         argsParser.args.push_back("--underlaying-type=std::uint32_t");
         argsParser.args.push_back("--override-template-parameter=EnumFlagsNameFormat:$(ENAMNAME)");
         argsParser.args.push_back("-E=EnumGeneratorOptionFlagsSerializable");
-        argsParser.args.push_back("-F=@" + rootPath + "_libs/marty_cpp/_enums/TestNumParsing.txt");
+        argsParser.args.push_back("-F=@" + rootPath + "_libs/marty_cpp/_enums/EnumGeneratorOptionFlagsSerializable.txt");
+        //argsParser.args.push_back("-F=@" + rootPath + "_libs/marty_cpp/_enums/TestNumParsing.txt");
         argsParser.args.push_back(rootPath + "../enums2.h");
 
         // argsParser.args.push_back("");
@@ -227,10 +235,6 @@ int main(int argc, char* argv[])
     //     LOG_ERR_OPT << "command line arguments parsing error" << "\n";
     //     return -1;
     // }
-
-    marty_tr::tr_set_lang_tag_format(marty_tr::ELangTagFormat::langTag); // langTagNeutral/langTagNeutralAuto/langId/langIdFull/langIdX/langIdFullX
-    marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
-    marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
 
 
         // std::string resultJson = marty_tr::tr_serialize_translations(marty_tr::tr_get_all_translations(), 2 /* indent */);
@@ -414,14 +418,16 @@ int main(int argc, char* argv[])
             std::string indentStr    = std::string(indentSize, ' '); // indent
             std::string indentIncStr = std::string(indentInc , ' ');  // indentInc
 
-            genArgs.valsText = marty_cpp::simple_trim( genArgs.valsText
-                                                     , [](char ch)
-                                                       {
-                                                           if (ch==' ' || ch=='\t')
-                                                               return true;
-                                                           return false;
-                                                       }
-                                                     );
+            // genArgs.valsText = marty_cpp::simple_trim( genArgs.valsText
+            //                                          , [](char ch)
+            //                                            {
+            //                                                if (ch==' ' || ch=='\t')
+            //                                                    return true;
+            //                                                return false;
+            //                                            }
+            //                                          );
+
+            // getStripEnumDefComment и так делаед трим
 
             std::string inlineEnumComment = marty_cpp::enum_impl_helpers::getStripEnumDefComment(genArgs.valsText);
             // std::size_t startsLen = marty_cpp::sort_includes_utils::startsWith(genArgs.valsText.begin(), genArgs.valsText.end(), "//");
@@ -521,12 +527,45 @@ int main(int argc, char* argv[])
                 swap(tmpText, genArgs.valsText)
             }
             */
+                // , namespacesStr
+                // , appConfig.namespaceNameStyle // marty_cpp::NameStyle::defaultStyle //TODO: !!!
+                // , appConfig.enumName
 
+            bool genDoc = !appConfig.mdOutputPath.empty();
+            if (genDoc)
+            {
+                generatorOptions |= marty_cpp::EnumGeneratorOptionFlags::generateDoc;
+            }
+
+            //std::string nsPath;
+            std::string nsFullName;
+            {
+                auto nsNames = marty_cpp::parseNsNameList<std::string>(namespacesStr);
+                for(auto nsName : nsNames)
+                {
+                    if (appConfig.namespaceNameStyle!=marty_cpp::NameStyle::defaultStyle)
+                        nsName = formatName(nsName, appConfig.namespaceNameStyle, true, true /* fix startDigit, keywords */);
+
+                    if (!nsFullName.empty())
+                        nsFullName.append(genTpl.namespaceSep);
+
+                    nsFullName.append(nsName);
+                }
+            }
+
+            std::ostringstream ossDocTmp;
+            std::ostringstream ossDocSerializeTmp;
+
+            //marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
             marty_cpp::enum_generate_serialize( oss
+                                              , ossDocTmp
+                                              , ossDocSerializeTmp
                                               , genArgs.valsText
                                               , indentStr
                                               , indentIncStr
-                                              , appConfig.enumName
+                                              , nsFullName
+                                              , appConfig.enumName           // Уже отформатированно как надо
+                                              , inlineEnumComment
                                               , genArgs.underlayingType
                                               , genArgs.valuesNameStyle
                                               , genArgs.serializedNameStyle
@@ -535,7 +574,124 @@ int main(int argc, char* argv[])
                                               , genTpl
                                               , &dups
                                               );
-       
+
+            if (genDoc)
+            {
+                if (appConfig.trLangs.empty())
+                    appConfig.trLangs.emplace_back("en-US");
+
+                std::string deflang;
+
+                for(auto lang: appConfig.trLangs)
+                {
+                    lang = marty_tr::tr_fix_lang_tag_format(lang);
+                    marty_tr::tr_set_def_lang(lang);
+
+                    if (deflang.empty())
+                        deflang = lang;
+
+                    std::ostringstream ossTmp;
+                    std::ostringstream ossDoc;
+                    std::ostringstream ossDocSerialize;
+                    std::vector<std::string> dupsTmp;
+
+                    marty_cpp::enum_generate_serialize( ossTmp
+                                                      , ossDoc
+                                                      , ossDocSerialize
+                                                      , genArgs.valsText
+                                                      , indentStr
+                                                      , indentIncStr
+                                                      , nsFullName
+                                                      , appConfig.enumName           // Уже отформатированно как надо
+                                                      , inlineEnumComment
+                                                      , genArgs.underlayingType
+                                                      , genArgs.valuesNameStyle
+                                                      , genArgs.serializedNameStyle
+                                                      , genArgs.enumElementPrefix
+                                                      , generatorOptions
+                                                      , genTpl
+                                                      , &dupsTmp
+                                                      );
+
+                    auto mdOutputPath = appConfig.mdOutputPath;
+                    mdOutputPath = umba::filename::appendPath(mdOutputPath, lang);
+                    {
+                        auto nsNames = marty_cpp::parseNsNameList<std::string>(namespacesStr);
+                        for(auto nsName : nsNames)
+                        {
+                            if (appConfig.namespaceNameStyle!=marty_cpp::NameStyle::defaultStyle)
+                                nsName = formatName(nsName, appConfig.namespaceNameStyle, true, true /* fix startDigit, keywords */);
+                            mdOutputPath = umba::filename::appendPath(mdOutputPath, nsName);
+                        }
+                    }
+    
+                    auto fileNameDoc  = umba::filename::appendExt(appConfig.enumName, std::string("md_"));
+                    auto mdOutputName = umba::filename::appendPath(mdOutputPath, fileNameDoc);
+    
+                    auto fileNameDocStrNames  = umba::filename::appendExt(appConfig.enumName+"_strings", std::string("md_"));
+                    auto mdOutputNameStrNames = umba::filename::appendPath(mdOutputPath, fileNameDocStrNames);
+    
+                    umba::filesys::createDirectoryEx( umba::filename::getPath(mdOutputName), true /* forceCreatePath */  );
+    
+                    std::string
+                    mdText = marty_cpp::converLfToOutputFormat(ossDoc.str(), appConfig.outputLinefeed);
+                    umba::cli_tool_helpers::writeOutput( mdOutputName, outputFileType
+                                                       , encoding::ToUtf8(), encoding::FromUtf8()
+                                                       , mdText, std::string() // bomData
+                                                       , true /* fromFile */, true /* utfSource */ , bOverwrite
+                                                       );
+    
+                    mdText = marty_cpp::converLfToOutputFormat(ossDocSerialize.str(), appConfig.outputLinefeed);
+                    umba::cli_tool_helpers::writeOutput( mdOutputNameStrNames, outputFileType
+                                                       , encoding::ToUtf8(), encoding::FromUtf8()
+                                                       , mdText, std::string() // bomData
+                                                       , true /* fromFile */, true /* utfSource */ , bOverwrite
+                                                       );
+
+                    if (deflang==lang)
+                    {
+                        auto mdOutputPath2 = appConfig.mdOutputPath;
+                        {
+                            auto nsNames = marty_cpp::parseNsNameList<std::string>(namespacesStr);
+                            for(auto nsName : nsNames)
+                            {
+                                if (appConfig.namespaceNameStyle!=marty_cpp::NameStyle::defaultStyle)
+                                    nsName = formatName(nsName, appConfig.namespaceNameStyle, true, true /* fix startDigit, keywords */);
+                                mdOutputPath2 = umba::filename::appendPath(mdOutputPath2, nsName);
+                            }
+                        }
+
+                        auto mdOutputName2 = umba::filename::appendPath(mdOutputPath2, fileNameDoc);
+                        auto mdOutputNameStrNames2 = umba::filename::appendPath(mdOutputPath2, fileNameDocStrNames);
+        
+                        umba::filesys::createDirectoryEx( umba::filename::getPath(mdOutputName2), true /* forceCreatePath */  );
+        
+                        mdText = marty_cpp::converLfToOutputFormat(ossDoc.str(), appConfig.outputLinefeed);
+                        umba::cli_tool_helpers::writeOutput( mdOutputName2, outputFileType
+                                                           , encoding::ToUtf8(), encoding::FromUtf8()
+                                                           , mdText, std::string() // bomData
+                                                           , true /* fromFile */, true /* utfSource */ , bOverwrite
+                                                           );
+        
+                        mdText = marty_cpp::converLfToOutputFormat(ossDocSerialize.str(), appConfig.outputLinefeed);
+                        umba::cli_tool_helpers::writeOutput( mdOutputNameStrNames2, outputFileType
+                                                           , encoding::ToUtf8(), encoding::FromUtf8()
+                                                           , mdText, std::string() // bomData
+                                                           , true /* fromFile */, true /* utfSource */ , bOverwrite
+                                                           );
+                    }
+
+                }
+            }
+
+                                                          // , appConfig.namespaceNameStyle // marty_cpp::NameStyle::defaultStyle //TODO: !!!
+                                                          // , genTpl.nsBegin
+                                                          // , genTpl.nsEnd
+                                                          // , genTpl.nsNameFormat
+
+                                                          // , namespacesStr
+                                                          // , appConfig.namespaceNameStyle // marty_cpp::NameStyle::defaultStyle //TODO: !!!
+                                              
         }
 
     } // NS scope
@@ -573,6 +729,15 @@ int main(int argc, char* argv[])
                                            , resultText, std::string() // bomData
                                            , true /* fromFile */, true /* utfSource */ , bOverwrite
                                            );
+
+        if (!appConfig.trTemplateFile.empty())
+        {
+            std::string resultJson = marty_tr::tr_serialize_translations(marty_tr::tr_alter_get_all_translations(), 2 /* indent */);
+            umba::filesys::createDirectoryEx( umba::filename::getPath(appConfig.trTemplateFile), true /* forceCreatePath */  );
+            umba::filesys::writeFile(appConfig.trTemplateFile, resultJson,  /* appConfig. */ bOverwrite ); // overwrite
+        }
+
+
     } // try
     catch(const std::runtime_error &e)
     {

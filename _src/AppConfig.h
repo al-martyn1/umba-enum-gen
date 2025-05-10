@@ -47,4 +47,8 @@ struct AppConfig
     
     std::vector<EnumGenerationArgs>   enumGenerationArgsList;
 
+    std::string                       mdOutputPath;
+    std::vector<std::string>          trLangs;
+    std::string                       trTemplateFile;
+
 };

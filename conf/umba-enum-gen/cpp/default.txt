@@ -9,6 +9,7 @@ NamespaceBegin                          = namespace $(NS){\n
 NamespaceEnd                            = } // namespace $(NS)\n
 NamespaceNameFormat                     = $(NS)
 #NamespaceNameFormat                     = N$(NS)
+NamespaceSeparator                      = ::
 
 EnumDescriptionCommentFormat            = " /*! $(COMMENT) */"
 
