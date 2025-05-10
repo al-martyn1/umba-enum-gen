@@ -1,0 +1,18 @@
+{
+  "en-US": {
+    "_generated-enums_/_common_/texts": {
+      "enum-val-list-title": "Name|Value|Description",
+      "section-title-enum": "$(TYPE) enumeration",
+      "section-title-flags": "$(TYPE) flags",
+      "str-val-list-title": "Value|Description",
+      "underlayed-type": "Underlying type: `$(TYPE)`",
+      "vals-case-insens": "Values are case insensitive",
+      "vals-case-sens": "Values are case sensitive"
+    },
+    "_generated-enums_/_common_/values": {
+      "invalid": "Invalid/unknown value",
+      "none": "Empty/none value",
+      "unknown": "Invalid/unknown value"
+    }
+  }
+}

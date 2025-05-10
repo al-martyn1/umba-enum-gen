@@ -1058,7 +1058,7 @@ int operator()( const std::string                               &a           //!
         else if ( opt.setParam("TRANSLATION_JSON",umba::command_line::OptionType::optString)
                || opt.isOption("translation") || opt.isOption("tr")
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Set translation for current enums set"
+               || opt.setDescription( "Add translation for current enums set"
                                     )
                 )
         {
@@ -1074,7 +1074,7 @@ int operator()( const std::string                               &a           //!
             std::string jsonTrData;
             if (!umba::filesys::readFile(strVal, jsonTrData))
             {
-                LOG_ERR_OPT<<"failed to read tranlations from '"<<strVal<<"' file (--tr)"<<"\n";
+                LOG_ERR_OPT<<"failed to read tranlations from '"<<strVal<<"' file (--translation)"<<"\n";
                 return 0; // return -1; // В данном случае не выходим по ошибке
             }
 
@@ -1086,12 +1086,12 @@ int operator()( const std::string                               &a           //!
             }
             catch(const std::exception &e)
             {
-                LOG_ERR_OPT<<"failed to parse tranlations file '"<<strVal<<"' (--tr): "<<e.what()<<"\n";
+                LOG_ERR_OPT<<"failed to parse tranlations file '"<<strVal<<"' (--translation): "<<e.what()<<"\n";
                 return 0; // return -1; // В данном случае не выходим по ошибке
             }
             catch(...)
             {
-                LOG_ERR_OPT<<"failed to parse tranlations file '"<<strVal<<"' (--tr): "<<"unknown error"<<"\n";
+                LOG_ERR_OPT<<"failed to parse tranlations file '"<<strVal<<"' (--translation): "<<"unknown error"<<"\n";
                 return 0; // return -1; // В данном случае не выходим по ошибке
             }
 

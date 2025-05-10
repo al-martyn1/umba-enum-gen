@@ -165,6 +165,7 @@ int main(int argc, char* argv[])
 
         argsParser.args.push_back("@" + rootPath + "_libs/marty_cpp/_enums/enums.rsp");
         argsParser.args.push_back("--tr-template-output=" + rootPath + "_libs/marty_cpp/_enums/tpl-tmp.tr.json");
+        argsParser.args.push_back("--tr-lang=en-US,ru-RU");
         argsParser.args.push_back("--md-output-path=" + rootPath + "tests/generated_md");
         argsParser.args.push_back("--enum-flags=enum-class,type-decl,serialize,deserialize,lowercase");
         argsParser.args.push_back("-N=marty_cpp");
@@ -255,6 +256,14 @@ int main(int argc, char* argv[])
         }
     }
 
+    if (umba::isDebuggerPresent())
+    {
+        const auto &trMap     = marty_tr::tr_get_all_translations();
+        const auto &trDefLang = marty_tr::tr_get_def_lang();
+        // Inspect trMap here
+        UMBA_ARG_USED(trMap);
+        UMBA_ARG_USED(trDefLang);
+    }
 
 
     unsigned allGenerationOptions = 0;
