@@ -110,8 +110,8 @@ int main(int argc, char* argv[])
 {
 
     marty_tr::tr_set_lang_tag_format(marty_tr::ELangTagFormat::langTag); // langTagNeutral/langTagNeutralAuto/langId/langIdFull/langIdX/langIdFullX
-    marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
-    marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US"));
+    marty_tr::tr_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US", marty_tr::ELangTagFormat::langTag));
+    marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format("en-US", marty_tr::ELangTagFormat::langTag));
 
 
     using namespace umba::omanip;
@@ -593,7 +593,7 @@ int main(int argc, char* argv[])
 
                 for(auto lang: appConfig.trLangs)
                 {
-                    lang = marty_tr::tr_fix_lang_tag_format(lang);
+                    lang = marty_tr::tr_fix_lang_tag_format(lang, marty_tr::ELangTagFormat::langTag);
                     marty_tr::tr_set_def_lang(lang);
 
                     if (deflang.empty())

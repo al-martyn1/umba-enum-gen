@@ -1030,7 +1030,7 @@ int operator()( const std::string                               &a           //!
                 return -1;
             }
 
-            marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal));
+            marty_tr::tr_alter_set_def_lang(marty_tr::tr_fix_lang_tag_format(strVal, marty_tr::ELangTagFormat::langTag));
 
             return 0;
         }
