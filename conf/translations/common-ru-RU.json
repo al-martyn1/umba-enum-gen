@@ -1,10 +1,10 @@
 {
   "ru-RU": {
     "_generated-enums_/_common_/texts": {
-      "enum-val-list-title": "Имя|Значение|Описание",
+      "enum-val-list-title": ":Имя|:Значение|:Описание",
       "section-title-enum": "$(TYPE) перечисление",
       "section-title-flags": "$(TYPE) флаги",
-      "str-val-list-title": "Значение|Описание",
+      "str-val-list-title": ":Значение|:Описание",
       "underlayed-type": "Базовый тип: `$(TYPE)`",
       "vals-case-insens": "Значения являются независимыми от регистра символов.",
       "vals-case-sens": "Значения являются регистро-зависимыми."
