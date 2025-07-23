@@ -995,7 +995,7 @@ int operator()( const std::string                               &a           //!
         else if ( opt.setParam("LANG",umba::command_line::OptionType::optString)
                || opt.isOption("tr-language") || opt.isOption("tr-lang")
                // || opt.setParam("VAL",true)
-               || opt.setDescription( "Set language (natural) for enum documentation"
+               || opt.setDescription( "Set language (natural, list) for enum documentation"
                                     )
                 )
         {
@@ -1035,7 +1035,7 @@ int operator()( const std::string                               &a           //!
             return 0;
         }
 
-        else if ( opt.setParam("LANG",umba::command_line::OptionType::optString)
+        else if ( opt.setParam("FILENAME",umba::command_line::OptionType::optString)
                || opt.isOption("tr-template-output")
                // || opt.setParam("VAL",true)
                || opt.setDescription( "Set output file name for enum documentation translations template"

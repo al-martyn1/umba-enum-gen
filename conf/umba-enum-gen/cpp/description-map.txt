@@ -27,7 +27,8 @@ EnumDeclarationClassKeyword             = ""
 TypeCast                                = ""
 
 EnumScopeBegin                          = \n$(INDENT){
-EnumScopeEnd                            = \n};\nreturn m;\n} // $(DECLBEGIN)\n\ninline const std::map<$(ENAMNAME), std::string>& get$(ENAMNAME)DescriptionMap()\n{\n    static auto m = make$(ENAMNAME)DescriptionMap();\n    return m;\n} 
+EnumScopeEnd                            = \n};\nreturn m;\n} // $(DECLBEGIN)\n\ninline const std::map<$(ENAMNAME), std::string>& get$(ENAMNAME)DescriptionMap()\n{\n    static auto m = make$(ENAMNAME)DescriptionMap();\n    return m;\n}\n\nstd::string enum_get_description($(ENAMNAME) e)\n{\n    const auto &m = get$(ENAMNAME)DescriptionMap();\n    auto it = m.find(e);\n    return it==m.end() ? std::string("No description") : it->second;\n}\n\n
+
 
 EnumItemDeclarationSeparatorBeforeFirst = \nstd::map<$(ENAMNAME), std::string> m =\n{\n 
 EnumItemDeclarationSeparatorBefore      = ,\n
